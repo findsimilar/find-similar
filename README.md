@@ -19,6 +19,11 @@ Join Us
 
 We invite developers, data scientists, and enthusiasts from all backgrounds to join our mission. Together, we can shape the future of "Find Similar," creating a powerful tool that enhances decision-making, discovery, and innovation across diverse fields.
 
+Open Source Collaboration
+-------------------------
+
+"Find Similar" is an open source project, fostering collaboration and innovation. We welcome contributors from all backgrounds to join us in shaping the future of similarity comparisons across various data types.
+
 Get Started
 -----------
 
