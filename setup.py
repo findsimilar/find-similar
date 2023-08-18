@@ -1,0 +1,28 @@
+import os
+from setuptools import setup
+
+with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
+    README = readme.read()
+
+# allow setup.py to be run from any path
+os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
+
+setup(
+    name='find-similar',
+    version='1.0',
+    packages=['algorithm'],
+    include_package_data=True,
+    description='Algorithm to define similarity rating between objects',
+    url='https://github.com/findsimilar/find-similar',
+    author='findsimilar',
+    author_email='help@findsimilar.org',
+    keywords=['rating', 'similarity', 'tokens'],
+    install_requires=[
+        'pymorphy2==0.9.1',
+        'pymorphy2-dicts-ru==2.4.417127.4579844',
+        'nltk==3.8.1',
+        'pydantic==1.10.7'
+    ],
+    python_requires='>=3',
+    classifiers=[],
+)
