@@ -1,10 +1,10 @@
-from algorithm.calc_functions import TokenText, calc_cosine_similarity_opt
-from algorithm.tokenize import STOP_WORDS, tokenize
+from .calc_functions import TokenText, calc_cosine_similarity_opt
+from .tokenize import STOP_WORDS, tokenize
 
 
 def find_similar(
         text_to_check,
-        texts: list[TokenText],
+        texts,
         language='russian',
         count=5,
         dictionary=None) -> list[TokenText]:
@@ -22,8 +22,12 @@ def find_similar(
     else:
         text_to_check_tokens = tokenize(text_to_check, STOP_WORDS, dictionary)
 
+    token_texts = []
     for text in texts:
+        if not isinstance(text, TokenText):
+            text = TokenText(text)
         cos = calc_cosine_similarity_opt(text.tokens, text_to_check_tokens)
         text.cos = cos
-    text_rated_sorted = sorted(texts, key=lambda item: item.cos, reverse=True)
+        token_texts.append(text)
+    text_rated_sorted = sorted(token_texts, key=lambda item: item.cos, reverse=True)
     return text_rated_sorted[:count]

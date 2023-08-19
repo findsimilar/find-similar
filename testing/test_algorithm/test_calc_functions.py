@@ -1,6 +1,6 @@
 import pytest
-from algorithm import calc_cosine_similarity_opt, TokenText
-from algorithm.tokenize import prepare_dictionary
+from find_similar import calc_cosine_similarity_opt, TokenText
+from find_similar.tokenize import prepare_dictionary
 
 
 @pytest.mark.parametrize(

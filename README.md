@@ -1,12 +1,11 @@
 # FindSimilar
 
-Mission Statement
------------------
+## Mission Statement
 
 The mission of the "Find Similar" project is to provide a powerful and versatile open source library that empowers developers to efficiently find similar objects and perform comparisons across a variety of data types. Whether dealing with texts, images, audio, or more, our project aims to simplify the process of identifying similarities and enhancing decision-making.
 
-Key Objectives
----------------
+### Key Objectives
+
 1. **Extensibility:** We strive to build a flexible framework that goes beyond textual comparisons, with plans to expand compatibility to various data formats, including images, audio, and more.
 2. **Ease of Integration:** Our library will offer an intuitive interface that integrates seamlessly into existing applications and workflows, making it accessible to developers regardless of their experience level.
 3. **Scalability:** Our focus is on creating efficient algorithms and data structures that can handle datasets of varying sizes, ensuring performance and accuracy as the project scales.
@@ -14,46 +13,44 @@ Key Objectives
 5. **Documentation and Education:** We are committed to providing comprehensive documentation, tutorials, and resources to help users and contributors understand the library's capabilities and use them effectively.
 6. **Privacy and Ethics:** As we expand into various data types, we are dedicated to upholding privacy and ethical considerations, ensuring that our library is built and used responsibly.
 
-Join Us
---------
+### Join Us
 
 We invite developers, data scientists, and enthusiasts from all backgrounds to join our mission. Together, we can shape the future of "Find Similar," creating a powerful tool that enhances decision-making, discovery, and innovation across diverse fields.
 
-Open Source Collaboration
--------------------------
+## Open Source Collaboration
 
 "Find Similar" is an open source project, fostering collaboration and innovation. We welcome contributors from all backgrounds to join us in shaping the future of similarity comparisons across various data types.
 
-Get Started
------------
+## Installation:
 
-Explore our GitHub repository, engage with the community on our forums, and join us in building a more connected and informed world through the "Find Similar" project.
+### From PyPi
 
-Installation:
--------------
+```bash
+pip install find-similar
+```
+
+You install core package from pypi. If you want to use tests and laboratory you can install find-similar from python package
+
+### From python package
 
 ```bash
 git clone https://github.com/findsimilar/find-similar
 pip3 install wheel
-python text-finder/setup.py bdist_wheel
-pip3 install text-finder/dist/*
+python find-similar/setup.py bdist_wheel
+pip3 install find-similar/dist/*
 ```
 
-Usage example:
-------
+## Usage example:
+
+### Simple usage
 
 ```python
-from algorithm import find_similar, TokenText, get_tokens
+from find_similar import find_similar
 
 texts = ['one two', 'two three', 'three four']
-texts_with_tokens = []
-for text in texts:
-    tokens = get_tokens(text)
-    text_token = TokenText(text, tokens)
-    texts_with_tokens.append(text_token)
 
 text_to_compare = 'one four'
-result = find_similar(texts_with_tokens, texts, count=10)
+result = find_similar(text_to_compare, texts, count=10)
 for item in result:
     print(item.text)
     print(item.cos)
@@ -71,12 +68,12 @@ two three
 
 Development
 --------
-* algorithm - this is the main package to install and use
+* find_similar - this is the main package to install and use
 * analytics - help functions to improve the main algorithm
 * lab - python scripts to research
 
-Lab
----
+## Lab
+
 You can run any useful script from lab package
 ```bash
 cd lab

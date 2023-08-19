@@ -1,4 +1,4 @@
-from algorithm.calc_functions import calc_cosine_similarity_opt
+from find_similar.calc_functions import calc_cosine_similarity_opt
 from database.db_functions import get_base_token_by_id
 
 # RATING_STEPS = [(1, 0), (5, 1), (10, 2), (25, 3), (50, 4), (100, 5), (500, 6), (1000, 7), (2000, 8)]

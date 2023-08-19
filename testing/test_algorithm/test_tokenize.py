@@ -1,4 +1,4 @@
-from algorithm.tokenize import (
+from find_similar.tokenize import (
     spacing,
     replacing,
     split_text_and_digits,

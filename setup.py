@@ -16,7 +16,7 @@ def read(filename):
 setup(
     name='find-similar',
     version='1.0',
-    packages=['algorithm'],
+    packages=['find_similar'],
     include_package_data=True,
     license='MIT',
     description='Algorithm to define similarity rating between objects',

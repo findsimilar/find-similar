@@ -1,4 +1,4 @@
-from algorithm import find_similar, TokenText
+from find_similar import find_similar, TokenText
 
 
 def test_find_similar_with_tokens():
@@ -10,7 +10,7 @@ def test_find_similar_with_tokens():
         TokenText('иван b 0', tokens={'иван', 'b', '0'}),
     ]
 
-    result = find_similar(text, texts, 2)
+    result = find_similar(text, texts)
     assert result[0].text == 'иван родил девчёнку'
     assert result[1].text == 'иван b 0'
 
@@ -24,6 +24,20 @@ def test_find_similar_with_str():
         TokenText('иван b 0', tokens={'иван', 'b', '0'}),
     ]
 
-    result = find_similar(text, texts, 2)
+    result = find_similar(text, texts)
+    assert result[0].text == 'иван родил девчёнку'
+    assert result[1].text == 'иван b 0'
+
+
+def test_find_similar_with_str_list():
+    text = 'иван родил девчёнку'
+
+    texts = [
+        'иван родил девчёнку',
+        'a b c',
+        'иван b 0',
+    ]
+
+    result = find_similar(text, texts)
     assert result[0].text == 'иван родил девчёнку'
     assert result[1].text == 'иван b 0'

@@ -8,7 +8,7 @@ from settings import DICTIONARY
 sys.path.append('../')
 
 from analytics.functions import analyze_one_item
-from algorithm import calc_cosine_similarity_opt
+from find_similar import calc_cosine_similarity_opt
 SEPARATOR = '///'
 filename = 'compare_two.txt'
 

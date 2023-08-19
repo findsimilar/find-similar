@@ -1,6 +1,6 @@
-from algorithm import find_similar
-from algorithm.calc_functions import TokenText
-from algorithm.tokenize import STOP_WORDS, tokenize
+from find_similar import find_similar
+from find_similar.calc_functions import TokenText
+from find_similar.tokenize import STOP_WORDS, tokenize
 from analytics.models import ReportUnit
 from lab.settings import TOP_ELEMENT
 

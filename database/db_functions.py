@@ -2,9 +2,9 @@ import logging
 
 from sqlalchemy.orm import joinedload
 
-from algorithm.tokenize import STOP_WORDS, tokenize
-from algorithm.calc_functions import get_tokens, TokenText
-from algorithm.calc_models import Item
+from find_similar.tokenize import STOP_WORDS, tokenize
+from find_similar.calc_functions import get_tokens, TokenText
+from find_similar.calc_models import Item
 from .db_main import get_session, engine
 from .db_models import Base, BaseItem, AnalogItem, BaseItemsTokens, AnalogItemsTokens, Shop
 

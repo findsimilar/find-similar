@@ -1,6 +1,6 @@
 import sys
 sys.path.append('../')
-from algorithm.tokenize import prepare_dictionary
+from find_similar.tokenize import prepare_dictionary
 
 DICTIONARY = None
 

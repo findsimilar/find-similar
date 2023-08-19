@@ -1,4 +1,4 @@
-from algorithm import TokenText
+from find_similar import TokenText
 
 
 class ReportUnit:
