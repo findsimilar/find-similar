@@ -1,5 +1,13 @@
 # FindSimilar
 
+> User-friendly library to find similar objects
+
+* [Mission Statement][mission_statement]
+* [Open Source Collaboration][open_source_collaboration]
+* [Installation][installation]
+* [Usage][usage]
+* [Development][development]
+
 ## Mission Statement
 
 The mission of the "Find Similar" project is to provide a powerful and versatile open source library that empowers developers to efficiently find similar objects and perform comparisons across a variety of data types. Whether dealing with texts, images, audio, or more, our project aims to simplify the process of identifying similarities and enhancing decision-making.
@@ -66,13 +74,13 @@ two three
 0.0
 ```
 
-Development
---------
+## Development
+
 * find_similar - this is the main package to install and use
 * analytics - help functions to improve the main algorithm
 * lab - python scripts to research
 
-## Lab
+### Lab
 
 You can run any useful script from lab package
 ```bash
@@ -120,3 +128,9 @@ python compare_two.py
 ```bash
 python tokenize_one.py
 ```
+
+[mission_statement]: https://github.com/findsimilar/find-similar#mission-statement
+[open_source_collaboration]: https://github.com/findsimilar/find-similar#open-source-collaboration
+[installation]: https://github.com/findsimilar/find-similar#installation
+[usage]: https://github.com/findsimilar/find-similar#usage-example
+[development]: https://github.com/findsimilar/find-similar#development
