@@ -1,3 +1,6 @@
+"""
+Module with tokenize functions
+"""
 import re
 import nltk
 from nltk.tokenize import word_tokenize
@@ -29,23 +32,44 @@ STOP_WORDS = STOP_WORDS.union(UNUSEFUL_WORDS)
 
 
 def spacing(text: str, chars: list):
+    """
+    replace chars to space
+    :param text: Text to spacing
+    :param chars: Chars to replace
+    :return: new text without chars with spaces
+    """
     for char in chars:
         text = text.replace(char, " ")
     return text
 
 
 def replacing(text: str, chars: list):
+    """
+    replace chars to empty string
+    :param text: Text to replace
+    :param chars: Chars to replace
+    :return: new text without chars
+    """
     for char in chars:
         text = text.replace(char, "")
     return text
 
 
 def replace_yio(text):
+    """
+    Change russian ё to e
+    :param text: Text to change
+    :return: new text without ё with е
+    """
     return text.replace('ё', 'е')
 
 
 def split_text_and_digits(s):
-    # Проверяем на строки с ед. цифрой внутри
+    """
+    Split words and digits
+    :param s: enter text
+    :return: list of separated texts
+    """
     regex = r"^\D+[0]\D+$"
     match = re.search(regex, s, re.MULTILINE)
     if match:
@@ -66,23 +90,23 @@ def split_text_and_digits(s):
     texts = []
     matches = re.finditer(regex, s, re.MULTILINE)
     for matchNum, match in enumerate(matches, start=1):
-        # делим все цифры
-        # part = match.group()
-        # if part.isdigit():
-        #     digits = list(part)
-        #     for digit in digits:
-        #         texts.append(digit)
-        # else:
-        #     # end
         texts.append(match.group())
     return texts
 
 
 def get_normal_form(part_parse):
+    """
+    Get Normal Form
+    :param part_parse: special object
+    :return: object normal form
+    """
     return part_parse.normal_form
 
 
 class HashebleSet(set):
+    """
+    Special class set with hash to compare and sort two sets
+    """
     def __hash__(self):
         return hash(str(self))
 
@@ -96,10 +120,10 @@ def use_dictionary_multiple(tokens, dictionary):
 
 def remove_part_speech(part_parse, parts=None, dictionary=None):
     """
-    Исключить произвольную часть речи из слова
-    :param dictionary:
-    :param part_parse: объект pymorph2
-    :param parts: части речи, передавать как множество {}
+    Remove variable part of speach from word
+    :param dictionary: default = None. If you want to replace one words to others you can send the dictionary.
+    :param part_parse: pymorph2 object
+    :param parts: set of part of speach
         NOUN	имя существительное
         ADJF	имя прилагательное (полное)
         VERB	глагол (личная форма)
@@ -108,7 +132,7 @@ def remove_part_speech(part_parse, parts=None, dictionary=None):
         PREP	предлог
         CONJ	союз
         PRCL	частица
-    :return:
+    :return: text without variable part of speach or None
     """
     result = get_normal_form(part_parse)
     if dictionary and HashebleSet([result]) in dictionary:
@@ -122,10 +146,22 @@ def remove_part_speech(part_parse, parts=None, dictionary=None):
 
 
 def get_parsed_text(word: str) -> pymorphy2:
+    """
+    Get Parsed Text
+    :param word: str word
+    :return: pymorphy2 object
+    """
     return morph.parse(word)[0]
 
 
 def tokenize(text: str, stop_words: set, dictionary=None):
+    """
+    Main function to tokenize text
+    :param text: Text to tokenize
+    :param stop_words: Stop words in Language to ignore
+    :param dictionary: default = None. If you want to replace one words to others you can send the dictionary.
+    :return: Tokens
+    """
     # заменяем эти символы на пробелы
     punc_to_space = [',', '/', '-', '=', '.']
     text = spacing(text, punc_to_space)
@@ -158,6 +194,11 @@ def tokenize(text: str, stop_words: set, dictionary=None):
 
 
 def prepare_dictionary(dictionary):
+    """
+    Get special object from simple python dict
+    :param dictionary: default = None. If you want to replace one words to others you can send the dictionary.
+    :return: dictionary of HashebleSet with data
+    """
     result = {}
     for k, v in dictionary.items():
         # взять нормальные формы
