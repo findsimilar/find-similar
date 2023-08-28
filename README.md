@@ -29,7 +29,13 @@ We invite developers, data scientists, and enthusiasts from all backgrounds to j
 
 ## Open Source Collaboration
 
-"Find Similar" is an open source project, fostering collaboration and innovation. We welcome contributors from all backgrounds to join us in shaping the future of similarity comparisons across various data types.
+"FindSimilar" is an open source project, fostering collaboration and innovation. We welcome contributors from all backgrounds to join us in shaping the future of similarity comparisons across various data types.
+
+### To Get Involved
+
+Get start with:
+* [Developer Guidelines](https://github.com/findsimilar/find-similar/blob/master/DEVELOPER_GUIDELINES.md)
+* [Developer Documentation](https://github.com/findsimilar/find-similar/blob/master/DEVELOPER_DOCUMENTATION.md)
 
 ## Installation:
 
