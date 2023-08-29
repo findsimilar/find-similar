@@ -6,6 +6,7 @@
 
 * [Mission Statement][mission_statement]
 * [Open Source Collaboration][open_source_collaboration]
+* [Demo][demo_url]
 * [Installation][installation]
 * [Usage][usage]
 * [Development][development]
@@ -36,6 +37,10 @@ We invite developers, data scientists, and enthusiasts from all backgrounds to j
 Get start with:
 * [Developer Guidelines](https://github.com/findsimilar/find-similar/blob/master/DEVELOPER_GUIDELINES.md)
 * [Developer Documentation](https://github.com/findsimilar/find-similar/blob/master/DEVELOPER_DOCUMENTATION.md)
+
+## Demo
+
+You can try simple demo example on [demo.findsimilar.org](http://demo.findsimilar.org)
 
 ## Installation:
 
@@ -139,6 +144,7 @@ python tokenize_one.py
 
 [mission_statement]: https://github.com/findsimilar/find-similar#mission-statement
 [open_source_collaboration]: https://github.com/findsimilar/find-similar#open-source-collaboration
+[demo_url]: https://github.com/findsimilar/find-similar#demo
 [installation]: https://github.com/findsimilar/find-similar#installation
 [usage]: https://github.com/findsimilar/find-similar#usage-example
 [development]: https://github.com/findsimilar/find-similar#development
