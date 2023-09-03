@@ -46,6 +46,13 @@ class TokenText:
         :return: True or False, depends on object id
         """
         return self.id == other.id_base_item
+    
+    def __str__(self):
+        return f'TokenText(text={self.text}, tokens={self.tokens})'
+
+    def __repr__(self):
+        return self.__str__()
+
 
 
 def get_tokens(text, dictionary=None) -> set:
