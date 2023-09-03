@@ -21,14 +21,23 @@ UNUSEFUL_WORDS = {
     'vz',
     # 'мя' # 2-мя, 3-мя, ...
 }
-try:
-    stopwords_with_language = stopwords.words('russian')
-except LookupError:
-    nltk.download('stopwords')
-    nltk.download('punkt')
-    stopwords_with_language = stopwords.words('russian')
-STOP_WORDS = set(stopwords_with_language).union(PUNCTUATION_SET)
-STOP_WORDS = STOP_WORDS.union(UNUSEFUL_WORDS)
+
+
+def add_nltk_stopwords(stop_words: set, language: str):
+    try:
+        stopwords_with_language = stopwords.words(language)
+    except LookupError:
+        nltk.download('stopwords')
+        nltk.download('punkt')
+        stopwords_with_language = stopwords.words(language)
+    except OSError:
+        stopwords_with_language = stopwords.words('russian')
+    stop_words = stop_words.union(stopwords_with_language)
+    return stop_words
+
+
+STOP_WORDS_NO_LANGUAGE = PUNCTUATION_SET.union(UNUSEFUL_WORDS)
+STOP_WORDS = add_nltk_stopwords(STOP_WORDS_NO_LANGUAGE, 'russian')
 
 
 def spacing(text: str, chars: list):

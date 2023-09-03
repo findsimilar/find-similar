@@ -10,6 +10,7 @@ from find_similar.tokenize import (
     prepare_dictionary,
     HashebleSet,
     replace_yio,
+    add_nltk_stopwords,
 )
 
 
@@ -90,3 +91,11 @@ def test_prepare_dictionary():
 
 def test_replace_yio():
     assert 'новье' == replace_yio('новьё')
+
+
+def test_add_nltk_stopwords():
+    test_dict = {'russian': 'будто', 'english': 'yourself', 'inglesh1': 'будто'}
+    for k, v in test_dict.items():
+        stop_words = add_nltk_stopwords(set(), k)
+        if_word_in_set = v in stop_words
+        assert if_word_in_set == True

@@ -2,7 +2,6 @@ import logging
 
 from sqlalchemy.orm import joinedload
 
-from find_similar.tokenize import STOP_WORDS, tokenize
 from find_similar.calc_functions import get_tokens, TokenText
 from find_similar.calc_models import Item
 from .db_main import get_session, engine
@@ -14,24 +13,24 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def insert_item(item: Item) -> int:
-    session = get_session()
-    session.expire_on_commit = False
-    if item.id_shop == 0:
-        item_add = BaseItem()
-    else:
-        item_add = AnalogItem()
-        item_add.id_shop = item.id_shop
-        item_add.id_base_item = item.id_base_item
-    item_add.label_text = item.label
-    item_add.part_number = item.part_number
-    try:
-        session.add(item_add)
-        session.commit()
-    except Exception as e:
-        logger.error(f"{e.__class__.__name__}: {e}")
-        session.rollback()
-    return item_add.id
+# def insert_item(item: Item) -> int:
+#     session = get_session()
+#     session.expire_on_commit = False
+#     if item.id_shop == 0:
+#         item_add = BaseItem()
+#     else:
+#         item_add = AnalogItem()
+#         item_add.id_shop = item.id_shop
+#         item_add.id_base_item = item.id_base_item
+#     item_add.label_text = item.label
+#     item_add.part_number = item.part_number
+#     try:
+#         session.add(item_add)
+#         session.commit()
+#     except Exception as e:
+#         logger.error(f"{e.__class__.__name__}: {e}")
+#         session.rollback()
+#     return item_add.id
 
 
 def get_all_base_items() -> list[Item]:
@@ -75,37 +74,37 @@ def create_all():
     Base.metadata.create_all(engine)
 
 
-def insert_tokens(label: str, id_base_item: int):
-    session = get_session()
-    session.expire_on_commit = False
-    token_set = tokenize(label, STOP_WORDS)
-    token_bulk_inserts = []
-    for token in token_set:
-        if token:
-            token_add = BaseItemsTokens()
-            token_add.token=token
-            token_add.id_item=id_base_item
-            token_bulk_inserts.append(token_add)
-    try:
-        session.bulk_save_objects(token_bulk_inserts)
-        session.commit()
-    except Exception as e:
-        logger.error(f"{e.__class__.__name__}: {e}")
-        session.rollback()
+# def insert_tokens(label: str, id_base_item: int):
+#     session = get_session()
+#     session.expire_on_commit = False
+#     token_set = tokenize(label, STOP_WORDS)
+#     token_bulk_inserts = []
+#     for token in token_set:
+#         if token:
+#             token_add = BaseItemsTokens()
+#             token_add.token=token
+#             token_add.id_item=id_base_item
+#             token_bulk_inserts.append(token_add)
+#     try:
+#         session.bulk_save_objects(token_bulk_inserts)
+#         session.commit()
+#     except Exception as e:
+#         logger.error(f"{e.__class__.__name__}: {e}")
+#         session.rollback()
 
 
-def get_token_set(id_base_item: int) -> set:
-    """
-    Выбирает из БД токены для одного наименования.
-    :param id_base_item:
-    :return:
-    """
-    session = get_session()
-    result_set = set()
-    tokens = session.query(BaseItemsTokens).filter_by(id_item=id_base_item).all()
-    for token in tokens:
-        result_set.add(token.token)
-    return result_set
+# def get_token_set(id_base_item: int) -> set:
+#     """
+#     Выбирает из БД токены для одного наименования.
+#     :param id_base_item:
+#     :return:
+#     """
+#     session = get_session()
+#     result_set = set()
+#     tokens = session.query(BaseItemsTokens).filter_by(id_item=id_base_item).all()
+#     for token in tokens:
+#         result_set.add(token.token)
+#     return result_set
 
 
 def construct_token_set(base_tokens: BaseItemsTokens) -> set:
