@@ -24,6 +24,7 @@ UNUSEFUL_WORDS = {
 
 STOP_WORDS_NO_LANGUAGE = PUNCTUATION_SET.union(UNUSEFUL_WORDS)
 
+
 def add_nltk_stopwords(stop_words: set, language: str):
     try:
         stopwords_with_language = stopwords.words(language)
