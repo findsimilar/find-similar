@@ -4,13 +4,13 @@ from find_similar.tokenize import (
     split_text_and_digits,
     get_normal_form,
     tokenize,
-    STOP_WORDS,
     remove_part_speech,
     get_parsed_text,
     prepare_dictionary,
     HashebleSet,
     replace_yio,
     add_nltk_stopwords,
+    STOP_WORDS_NO_LANGUAGE,
 )
 
 
@@ -44,14 +44,14 @@ def test_tokenize():
     text = 'Иван,родил/девченку-веле¶л 1тащить2пеленку3'
     result = {'пелёнка', '3', 'девчёнка', '2', '1', 'иван'}
     # without dictionary
-    assert tokenize(text, STOP_WORDS) == result
+    assert tokenize(text, STOP_WORDS_NO_LANGUAGE) == result
     # with dictionary
     dictionary = {
         '3': 'новый конь'
     }
     result = {'пелёнка', 'новый', 'конь', 'девчёнка', '2', '1', 'иван'}
     dictionary = prepare_dictionary(dictionary)
-    assert tokenize(text, STOP_WORDS, dictionary) == result
+    assert tokenize(text, STOP_WORDS_NO_LANGUAGE, dictionary) == result
 
 
 def test_remove_part_speech():

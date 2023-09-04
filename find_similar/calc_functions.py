@@ -1,7 +1,7 @@
 """
 Calculation functions to find similarity percent
 """
-from .tokenize import tokenize, STOP_WORDS
+from .tokenize import tokenize, STOP_WORDS_NO_LANGUAGE, add_nltk_stopwords
 
 
 def calc_cosine_similarity_opt(x_set: set, y_set: set) -> float:
@@ -48,12 +48,14 @@ class TokenText:
         return self.id == other.id_base_item
 
 
-def get_tokens(text, dictionary=None) -> set:
+def get_tokens(text, dictionary=None, language='russian') -> set:
     """
     Get tokens from str text
     :param text: str text
-    :param dictionary: default = None. If you want to replace one words to others you can send the dictionary.
+    :param dictionary: default = None. If you want to replace one words to others you can send the dictionary
+    :param language
     :return: tokes for text
     """
-    tokens = tokenize(text, STOP_WORDS, dictionary)
+    stop_words_summary = add_nltk_stopwords(STOP_WORDS_NO_LANGUAGE, language)
+    tokens = tokenize(text, stop_words_summary, dictionary)
     return tokens

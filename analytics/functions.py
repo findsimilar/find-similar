@@ -1,7 +1,7 @@
+from analytics.models import ReportUnit
 from find_similar import find_similar
 from find_similar.calc_functions import TokenText
-from find_similar.tokenize import STOP_WORDS, tokenize
-from analytics.models import ReportUnit
+from find_similar.tokenize import tokenize, STOP_WORDS_NO_LANGUAGE, add_nltk_stopwords
 from lab.settings import TOP_ELEMENT
 
 # RATING_STEPS = [(1, 0), (5, 1), (10, 2), (25, 3), (50, 4), (100, 5), (500, 6), (1000, 7), (2000, 8)]
@@ -74,8 +74,9 @@ def get_report_total(ratings_total: list, output=print):
         t = count_acc
 
 
-def analyze_one_item(item, dictionary=None):
+def analyze_one_item(item, dictionary=None, language='russian'):
     print(item)
-    tokens = tokenize(item, STOP_WORDS, dictionary=dictionary)
+    stop_words_summary = add_nltk_stopwords(STOP_WORDS_NO_LANGUAGE, language)
+    tokens = tokenize(item, stop_words_summary, dictionary=dictionary)
     print(tokens)
     return tokens
