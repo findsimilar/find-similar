@@ -116,6 +116,6 @@ def test_add_nltk_stopwords():
         is_word_in_set = False
         if v in stop_words:
             is_word_in_set = True
-        assert is_word_in_set == True
+        assert is_word_in_set
     with pytest.raises(LanguageNotFound):
         stop_words = add_nltk_stopwords(set(), 'unknown_language')
