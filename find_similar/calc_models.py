@@ -14,3 +14,15 @@ class Item(BaseModel):
 
     def __eq__(self, other):
         return self.id == other.id_base_item
+
+
+class TokenizeException(Exception):
+    pass
+
+
+class LanguageNotFound(TokenizeException):
+    def __init__(self, language):
+        self.language = language
+        super().__init__(
+            f"Language '{language}' is not supported by nltk module"
+        )

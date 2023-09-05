@@ -7,6 +7,8 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import pymorphy2
 
+from find_similar.calc_models import LanguageNotFound
+
 morph = pymorphy2.MorphAnalyzer()
 
 PUNCTUATION_SET = {";", ",", ".", "(", ")", "*", "-", ':'}
@@ -33,7 +35,7 @@ def add_nltk_stopwords(stop_words: set, language: str):
         nltk.download('punkt')
         stopwords_with_language = stopwords.words(language)
     except OSError:
-        stopwords_with_language = stopwords.words('russian')
+        raise LanguageNotFound(language)
     stop_words = stop_words.union(stopwords_with_language)
     return stop_words
 
