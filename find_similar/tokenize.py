@@ -181,7 +181,14 @@ def tokenize(text: str, language: str, dictionary=None):
     text = replace_yio(text)
     tmp_set = set()
     # now we go by individual words
-    for word in word_tokenize(text):
+    try:
+        word_tokenize(text, language=language)
+    except LookupError:
+        nltk.download('stopwords')
+        nltk.download('punkt')
+    except OSError:
+        raise LanguageNotFound(language)
+    for word in word_tokenize(text, language=language):
         # divide into parts if there are numbers in the word
         parts = split_text_and_digits(word)
         # then we go in parts
