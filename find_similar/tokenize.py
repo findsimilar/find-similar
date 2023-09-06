@@ -182,7 +182,7 @@ def tokenize(text: str, language: str, dictionary=None):
     tmp_set = set()
     # now we go by individual words
     try:
-        word_tokenize(text, language=language)
+        stopwords.words(language)
     except LookupError:
         nltk.download('stopwords')
         nltk.download('punkt')

@@ -76,6 +76,6 @@ def get_report_total(ratings_total: list, output=print):
 
 def analyze_one_item(item, dictionary=None, language='russian'):
     print(item)
-    tokens = tokenize(item, language, dictionary=dictionary)
+    tokens = tokenize(item, language=language, dictionary=dictionary)
     print(tokens)
     return tokens
