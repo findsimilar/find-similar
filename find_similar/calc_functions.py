@@ -37,7 +37,7 @@ class TokenText:
         self.text = text
         for k, v in kwargs.items():
             setattr(self, k, v)
-        self.tokens = tokens if tokens else get_tokens(text, dictionary)
+        self.tokens = tokens if tokens else get_tokens(text, dictionary=dictionary)
 
     def __eq__(self, other):
         """

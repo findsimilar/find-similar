@@ -142,7 +142,7 @@ def generate_base_tokens(dictionary=None):
     items = get_all_base_items()
     items_tokens = []
     for item in items:
-        tokens = get_tokens(item.label, dictionary)
+        tokens = get_tokens(item.label, dictionary=dictionary)
         for token in tokens:
             token_add = BaseItemsTokens()
             token_add.token = token
@@ -162,7 +162,7 @@ def generate_analog_tokens(dictionary=None):
     items = get_all_analog_items()
     items_tokens = []
     for item in items:
-        tokens = get_tokens(item.label, dictionary)
+        tokens = get_tokens(item.label, dictionary=dictionary)
         for token in tokens:
             token_add = AnalogItemsTokens()
             token_add.token = token
