@@ -3,7 +3,7 @@ Core module with search functions
 """
 
 from .calc_functions import TokenText, calc_cosine_similarity_opt
-from .tokenize import tokenize, add_nltk_stopwords
+from .tokenize import tokenize
 
 
 def find_similar(
