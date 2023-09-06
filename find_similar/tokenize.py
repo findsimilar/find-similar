@@ -12,7 +12,6 @@ from find_similar.calc_models import LanguageNotFound
 morph = pymorphy2.MorphAnalyzer()
 
 PUNCTUATION_SET = {";", ",", ".", "(", ")", "*", "-", ':'}
-
 UNUSEFUL_WORDS = {
     'шт', 'уп',
     'x', 'х',  # одна букава x-английская, вторая х-русская
@@ -27,7 +26,9 @@ UNUSEFUL_WORDS = {
 STOP_WORDS_NO_LANGUAGE = PUNCTUATION_SET.union(UNUSEFUL_WORDS)
 
 
-def add_nltk_stopwords(stop_words: set, language: str):
+def add_nltk_stopwords(language: str, stop_words=None):
+    if stop_words is None:
+        stop_words = STOP_WORDS_NO_LANGUAGE
     try:
         stopwords_with_language = stopwords.words(language)
     except LookupError:
@@ -163,11 +164,11 @@ def get_parsed_text(word: str) -> pymorphy2:
     return morph.parse(word)[0]
 
 
-def tokenize(text: str, stop_words: set, dictionary=None):
+def tokenize(text: str, language: str, dictionary=None):
     """
     Main function to tokenize text
     :param text: Text to tokenize
-    :param stop_words: Stop words in Language to ignore
+    :param language: language for setting stop-words
     :param dictionary: default = None. If you want to replace one words to others you can send the dictionary.
     :return: Tokens
     """
@@ -192,6 +193,7 @@ def tokenize(text: str, stop_words: set, dictionary=None):
             word_normal_form = remove_part_speech(part_parse, dictionary=dictionary)
             if word_normal_form:
                 # remove stop words
+                stop_words = add_nltk_stopwords(language)
                 if word_normal_form not in stop_words:
                     tmp_set.add(word_normal_form)
     if dictionary:

@@ -1,11 +1,9 @@
 """
 Core module with search functions
 """
-import nltk
-from nltk.corpus import stopwords
 
 from .calc_functions import TokenText, calc_cosine_similarity_opt
-from .tokenize import STOP_WORDS_NO_LANGUAGE, tokenize, add_nltk_stopwords
+from .tokenize import tokenize, add_nltk_stopwords
 
 
 def find_similar(
@@ -23,12 +21,10 @@ def find_similar(
     :param dictionary: default = None. If you want to replace one words to others you can send the dictionary.
     :return: Result list sorted by similarity percent
     """
-    stop_words_summary = add_nltk_stopwords(STOP_WORDS_NO_LANGUAGE, language)
-
     if isinstance(text_to_check, TokenText):
         text_to_check_tokens = text_to_check.tokens
     else:
-        text_to_check_tokens = tokenize(text_to_check, stop_words_summary, dictionary)
+        text_to_check_tokens = tokenize(text_to_check, language, dictionary)
 
     token_texts = []
     for text in texts:

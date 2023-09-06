@@ -46,7 +46,7 @@ def test_tokenize():
     text = 'Иван,родил/девченку-веле¶л 1тащить2пеленку3'
     result = {'пелёнка', '3', 'девчёнка', '2', '1', 'иван'}
     # without dictionary
-    assert tokenize(text, STOP_WORDS_NO_LANGUAGE) == result
+    assert tokenize(text, 'russian') == result
 
     # with dictionary
     dictionary = {
@@ -54,20 +54,20 @@ def test_tokenize():
     }
     result = {'пелёнка', 'новый', 'конь', 'девчёнка', '2', '1', 'иван'}
     dictionary = prepare_dictionary(dictionary)
-    assert tokenize(text, STOP_WORDS_NO_LANGUAGE, dictionary) == result
+    assert tokenize(text, 'russian', dictionary) == result
 
     text = 'My/ very ,,excited mot¶her 1just 3served us 2nine pies'
-    result = {'my', 'just', '2', '3', 'pies', 'us', 'nine', 'excited', '1', 'mother', 'very', 'served'}
+    result = {'2', '3', 'pies', 'us', 'nine', 'excited', '1', 'mother', 'served'}
     # without dictionary
-    assert tokenize(text, STOP_WORDS_NO_LANGUAGE) == result
+    assert tokenize(text, 'english') == result
 
     # with dictionary
     dictionary = {
         'excited': 'educated'
     }
-    result = {'my', 'just', '2', '3', 'pies', 'us', 'nine', 'educated', '1', 'mother', 'very', 'served'}
+    result = {'2', '3', 'pies', 'us', 'nine', 'educated', '1', 'mother', 'served'}
     dictionary = prepare_dictionary(dictionary)
-    assert tokenize(text, STOP_WORDS_NO_LANGUAGE, dictionary) == result
+    assert tokenize(text, 'english', dictionary) == result
 
 
 def test_remove_part_speech():
@@ -112,10 +112,10 @@ def test_replace_yio():
 def test_add_nltk_stopwords():
     test_dict = {'russian': 'будто', 'english': 'yourself'}
     for k, v in test_dict.items():
-        stop_words = add_nltk_stopwords(set(), k)
+        stop_words = add_nltk_stopwords(k)
         is_word_in_set = False
         if v in stop_words:
             is_word_in_set = True
         assert is_word_in_set
     with pytest.raises(LanguageNotFound):
-        stop_words = add_nltk_stopwords(set(), 'unknown_language')
+        stop_words = add_nltk_stopwords('unknown_language')
