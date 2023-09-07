@@ -26,6 +26,18 @@ UNUSEFUL_WORDS = {
 STOP_WORDS_NO_LANGUAGE = PUNCTUATION_SET.union(UNUSEFUL_WORDS)
 
 
+def get_stopwords_from_nltk(language: str):
+    try:
+        stopwords_with_language = stopwords.words(language)
+    except LookupError:
+        nltk.download('stopwords')
+        nltk.download('punkt')
+        stopwords_with_language = stopwords.words(language)
+    except OSError:
+        raise LanguageNotFound(language)
+    return stopwords_with_language
+
+
 def add_nltk_stopwords(language: str, stop_words=None):
     if stop_words is None:
         stop_words = STOP_WORDS_NO_LANGUAGE
@@ -222,15 +234,3 @@ def prepare_dictionary(dictionary):
         new_v = set(values)
         result[new_k] = new_v
     return result
-
-
-def get_stopwords_from_nltk(language: str):
-    try:
-        stopwords_with_language = stopwords.words(language)
-    except LookupError:
-        nltk.download('stopwords')
-        nltk.download('punkt')
-        stopwords_with_language = stopwords.words(language)
-    except OSError:
-        raise LanguageNotFound(language)
-    return stopwords_with_language
