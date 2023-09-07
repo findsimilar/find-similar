@@ -1,7 +1,7 @@
 """
 Calculation functions to find similarity percent
 """
-from .tokenize import tokenize, STOP_WORDS
+from .tokenize import tokenize
 
 
 def calc_cosine_similarity_opt(x_set: set, y_set: set) -> float:
@@ -37,7 +37,7 @@ class TokenText:
         self.text = text
         for k, v in kwargs.items():
             setattr(self, k, v)
-        self.tokens = tokens if tokens else get_tokens(text, dictionary)
+        self.tokens = tokens if tokens else get_tokens(text, dictionary=dictionary)
 
     def __eq__(self, other):
         """
@@ -55,12 +55,13 @@ class TokenText:
 
 
 
-def get_tokens(text, dictionary=None) -> set:
+def get_tokens(text, dictionary=None, language='russian') -> set:
     """
     Get tokens from str text
     :param text: str text
-    :param dictionary: default = None. If you want to replace one words to others you can send the dictionary.
+    :param dictionary: default = None. If you want to replace one words to others you can send the dictionary
+    :param language
     :return: tokes for text
     """
-    tokens = tokenize(text, STOP_WORDS, dictionary)
+    tokens = tokenize(text, language, dictionary)
     return tokens

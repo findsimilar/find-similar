@@ -15,7 +15,12 @@ print('Read data from file...')
 with open(filename, 'r', encoding='utf-8') as f:
     line = f.read()
 
+try:
+    _, language, *others = sys.argv
+except:
+    language = 'russian'
+
 one = line.strip()
 print(f'{one} has been loaded')
-one_tokens = analyze_one_item(one, DICTIONARY)
+one_tokens = analyze_one_item(one, DICTIONARY, language=language)
 print('TOKENS:', one_tokens)

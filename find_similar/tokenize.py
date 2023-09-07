@@ -7,10 +7,11 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import pymorphy2
 
+from find_similar.calc_models import LanguageNotFound
+
 morph = pymorphy2.MorphAnalyzer()
 
 PUNCTUATION_SET = {";", ",", ".", "(", ")", "*", "-", ':'}
-
 UNUSEFUL_WORDS = {
     'шт', 'уп',
     'x', 'х',  # одна букава x-английская, вторая х-русская
@@ -21,14 +22,23 @@ UNUSEFUL_WORDS = {
     'vz',
     # 'мя' # 2-мя, 3-мя, ...
 }
-try:
-    stopwords_with_language = stopwords.words('russian')
-except LookupError:
-    nltk.download('stopwords')
-    nltk.download('punkt')
-    stopwords_with_language = stopwords.words('russian')
-STOP_WORDS = set(stopwords_with_language).union(PUNCTUATION_SET)
-STOP_WORDS = STOP_WORDS.union(UNUSEFUL_WORDS)
+
+STOP_WORDS_NO_LANGUAGE = PUNCTUATION_SET.union(UNUSEFUL_WORDS)
+
+
+def add_nltk_stopwords(language: str, stop_words=None):
+    if stop_words is None:
+        stop_words = STOP_WORDS_NO_LANGUAGE
+    try:
+        stopwords_with_language = stopwords.words(language)
+    except LookupError:
+        nltk.download('stopwords')
+        nltk.download('punkt')
+        stopwords_with_language = stopwords.words(language)
+    except OSError:
+        raise LanguageNotFound(language)
+    stop_words = stop_words.union(stopwords_with_language)
+    return stop_words
 
 
 def spacing(text: str, chars: list):
@@ -124,14 +134,14 @@ def remove_part_speech(part_parse, parts=None, dictionary=None):
     :param dictionary: default = None. If you want to replace one words to others you can send the dictionary.
     :param part_parse: pymorph2 object
     :param parts: set of part of speach
-        NOUN	имя существительное
-        ADJF	имя прилагательное (полное)
-        VERB	глагол (личная форма)
-        INFN	глагол (инфинитив)
-        NUMR	числительное
-        PREP	предлог
-        CONJ	союз
-        PRCL	частица
+        NOUN	noun name
+        ADJF	adjective name (full)
+        VERB	verb (personal form)
+        INFN	verb (infinitive)
+        NUMR	numeral
+        PREP	preposition
+        CONJ	conjunction
+        PRCL	particle
     :return: text without variable part of speach or None
     """
     result = get_normal_form(part_parse)
@@ -154,41 +164,47 @@ def get_parsed_text(word: str) -> pymorphy2:
     return morph.parse(word)[0]
 
 
-def tokenize(text: str, stop_words: set, dictionary=None):
+def tokenize(text: str, language: str, dictionary=None):
     """
     Main function to tokenize text
     :param text: Text to tokenize
-    :param stop_words: Stop words in Language to ignore
+    :param language: language for setting stop-words
     :param dictionary: default = None. If you want to replace one words to others you can send the dictionary.
     :return: Tokens
     """
-    # заменяем эти символы на пробелы
+    # replace these characters with spaces
     punc_to_space = [',', '/', '-', '=', '.']
     text = spacing(text, punc_to_space)
-    # удаляем эти символы (заменяем на пустую строку)
+    # delete these characters (replace with an empty string)
     punc_to_delete = ['Ø', '¶', '”']
     text = replacing(text, punc_to_delete)
     text = replace_yio(text)
-    # итоговый set
-    # result_set = set()
     tmp_set = set()
-    # теперь идем по отдельным словам
-    for word in word_tokenize(text):
-        # делим на части если в слове есть цифры
+    # now we go by individual words
+    try:
+        stopwords.words(language)
+    except LookupError:
+        nltk.download('stopwords')
+        nltk.download('punkt')
+    except OSError:
+        raise LanguageNotFound(language)
+    for word in word_tokenize(text, language=language):
+        # divide into parts if there are numbers in the word
         parts = split_text_and_digits(word)
-        # дальше идем по частям
+        # then we go in parts
         for part in parts:
-            # проверяем если глагол - убираем его
-            # в обратном случае приводим к нормальной форме
+            # check if the verb - remove it
+            # in the opposite case, we bring it to the normal form
             part_parse = get_parsed_text(part)
-            # удаляем глаголы и приводим к нормальной форме
+            # we remove the verbs and bring them to the normal form
             word_normal_form = remove_part_speech(part_parse, dictionary=dictionary)
             if word_normal_form:
-                # убираем стоп слова
+                # remove stop words
+                stop_words = add_nltk_stopwords(language)
                 if word_normal_form not in stop_words:
                     tmp_set.add(word_normal_form)
     if dictionary:
-        # используем справочник
+        # use dictionary
         tmp_set = use_dictionary_multiple(tmp_set, dictionary)
     return tmp_set
 

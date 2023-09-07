@@ -1,8 +1,9 @@
 """
 Core module with search functions
 """
+
 from .calc_functions import TokenText, calc_cosine_similarity_opt
-from .tokenize import STOP_WORDS, tokenize
+from .tokenize import tokenize
 
 
 def find_similar(
@@ -23,7 +24,7 @@ def find_similar(
     if isinstance(text_to_check, TokenText):
         text_to_check_tokens = text_to_check.tokens
     else:
-        text_to_check_tokens = tokenize(text_to_check, STOP_WORDS, dictionary)
+        text_to_check_tokens = tokenize(text_to_check, language, dictionary)
 
     token_texts = []
     for text in texts:
