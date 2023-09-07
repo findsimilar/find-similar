@@ -29,14 +29,7 @@ STOP_WORDS_NO_LANGUAGE = PUNCTUATION_SET.union(UNUSEFUL_WORDS)
 def add_nltk_stopwords(language: str, stop_words=None):
     if stop_words is None:
         stop_words = STOP_WORDS_NO_LANGUAGE
-    try:
-        stopwords_with_language = stopwords.words(language)
-    except LookupError:
-        nltk.download('stopwords')
-        nltk.download('punkt')
-        stopwords_with_language = stopwords.words(language)
-    except OSError:
-        raise LanguageNotFound(language)
+    stopwords_with_language = get_stopwords_from_nltk(language)
     stop_words = stop_words.union(stopwords_with_language)
     return stop_words
 
@@ -181,13 +174,14 @@ def tokenize(text: str, language: str, dictionary=None):
     text = replace_yio(text)
     tmp_set = set()
     # now we go by individual words
-    try:
-        stopwords.words(language)
-    except LookupError:
-        nltk.download('stopwords')
-        nltk.download('punkt')
-    except OSError:
-        raise LanguageNotFound(language)
+    # try:
+    #     stopwords.words(language)
+    # except LookupError:
+    #     nltk.download('stopwords')
+    #     nltk.download('punkt')
+    # except OSError:
+    #     raise LanguageNotFound(language)
+    stop_words = add_nltk_stopwords(language)
     for word in word_tokenize(text, language=language):
         # divide into parts if there are numbers in the word
         parts = split_text_and_digits(word)
@@ -200,7 +194,6 @@ def tokenize(text: str, language: str, dictionary=None):
             word_normal_form = remove_part_speech(part_parse, dictionary=dictionary)
             if word_normal_form:
                 # remove stop words
-                stop_words = add_nltk_stopwords(language)
                 if word_normal_form not in stop_words:
                     tmp_set.add(word_normal_form)
     if dictionary:
@@ -229,3 +222,15 @@ def prepare_dictionary(dictionary):
         new_v = set(values)
         result[new_k] = new_v
     return result
+
+
+def get_stopwords_from_nltk(language: str):
+    try:
+        stopwords_with_language = stopwords.words(language)
+    except LookupError:
+        nltk.download('stopwords')
+        nltk.download('punkt')
+        stopwords_with_language = stopwords.words(language)
+    except OSError:
+        raise LanguageNotFound(language)
+    return stopwords_with_language
