@@ -140,3 +140,6 @@ config.py
 *.xls
 *.csv
 *.xlsm
+
+# docs folder
+.docs/
