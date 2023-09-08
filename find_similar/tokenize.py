@@ -44,7 +44,7 @@ def add_nltk_stopwords(language: str, stop_words=None):
     stopwords_with_language = get_stopwords_from_nltk(language)
     stop_words = stop_words.union(stopwords_with_language)
     return stop_words
-print(add_nltk_stopwords('russian'))
+
 
 def spacing(text: str, chars: list):
     """
@@ -200,7 +200,10 @@ def tokenize(text: str, language: str, dictionary=None, remove_stopwords=True):
             word_normal_form = remove_part_speech(part_parse, dictionary=dictionary)
             if word_normal_form:
                 # remove stop words
-                if remove_stopwords and word_normal_form not in stop_words or not remove_stopwords:
+                if remove_stopwords:
+                    if word_normal_form not in stop_words:
+                        tmp_set.add(word_normal_form)
+                else:
                     tmp_set.add(word_normal_form)
     if dictionary:
         # use dictionary
