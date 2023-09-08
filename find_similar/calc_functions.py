@@ -54,7 +54,6 @@ class TokenText:
         return self.__str__()
 
 
-
 def get_tokens(text, dictionary=None, language='russian') -> set:
     """
     Get tokens from str text
