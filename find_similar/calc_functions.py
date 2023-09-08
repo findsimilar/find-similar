@@ -48,10 +48,10 @@ class TokenText:
         return self.id == other.id_base_item
     
     def __str__(self):
-        return f'TokenText(text={self.text}, tokens={self.tokens})'
+        return repr(self)
 
     def __repr__(self):
-        return self.__str__()
+        return f'TokenText(text="{self.text}", tokens={self.tokens})'
 
 
 
