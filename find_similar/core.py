@@ -11,7 +11,8 @@ def find_similar(
         texts,
         language='russian',
         count=5,
-        dictionary=None) -> list[TokenText]:
+        dictionary=None,
+        remove_stopwords=True) -> list[TokenText]:
     """
     The main function to search similar texts.
     :param text_to_check: Text to find similars
@@ -19,12 +20,13 @@ def find_similar(
     :param language: Language, default='russian'
     :param count: Count results
     :param dictionary: default = None. If you want to replace one words to others you can send the dictionary.
+    :param remove_stopwords: default = True. Remove or not stopwords
     :return: Result list sorted by similarity percent
     """
     if isinstance(text_to_check, TokenText):
         text_to_check_tokens = text_to_check.tokens
     else:
-        text_to_check_tokens = tokenize(text_to_check, language, dictionary)
+        text_to_check_tokens = tokenize(text_to_check, language, dictionary, remove_stopwords)
 
     token_texts = []
     for text in texts:

@@ -54,7 +54,6 @@ class TokenText:
         return f'TokenText(text="{self.text}", tokens={self.tokens})'
 
 
-
 def get_tokens(text, dictionary=None, language='russian') -> set:
     """
     Get tokens from str text

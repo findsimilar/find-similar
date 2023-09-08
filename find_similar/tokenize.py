@@ -169,12 +169,13 @@ def get_parsed_text(word: str) -> pymorphy2:
     return morph.parse(word)[0]
 
 
-def tokenize(text: str, language: str, dictionary=None):
+def tokenize(text: str, language: str, dictionary=None, remove_stopwords=True):
     """
     Main function to tokenize text
     :param text: Text to tokenize
     :param language: language for setting stop-words
     :param dictionary: default = None. If you want to replace one words to others you can send the dictionary.
+    :param remove_stopwords: default = True. Remove stopwords if True
     :return: Tokens
     """
     # replace these characters with spaces
@@ -199,7 +200,10 @@ def tokenize(text: str, language: str, dictionary=None):
             word_normal_form = remove_part_speech(part_parse, dictionary=dictionary)
             if word_normal_form:
                 # remove stop words
-                if word_normal_form not in stop_words:
+                if remove_stopwords:
+                    if word_normal_form not in stop_words:
+                        tmp_set.add(word_normal_form)
+                else:
                     tmp_set.add(word_normal_form)
     if dictionary:
         # use dictionary

@@ -119,3 +119,11 @@ def test_add_nltk_stopwords():
         assert is_word_in_set
     with pytest.raises(LanguageNotFound):
         stop_words = add_nltk_stopwords('unknown_language')
+
+
+def test_remove_or_not_stopwords():
+    text = 'что я знаю о кругах'
+    result = {'круг'}
+    assert tokenize(text, 'russian', remove_stopwords=True) == result
+    result = {'что', 'я', 'о', 'круг'}
+    assert tokenize(text, 'russian', remove_stopwords=False) == result
