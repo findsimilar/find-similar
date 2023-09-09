@@ -1,0 +1,7 @@
+[MASTER]
+disable=
+    R0903, #  Too few public methods
+    E1101, #  Dynamic attributes
+    W0511, #  Used when a warning note
+    C0103, #  Pylint doesn't like id attribute
+

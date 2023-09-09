@@ -1,26 +1,20 @@
 """
 Читает текст из файла и создает токены
+Read text from file and create tokens
 """
 import sys
 
-from settings import DICTIONARY
+from settings import DICTIONARY, load_from_file  # pylint: disable=import-error
 
-sys.path.append('../')
+sys.path.append("../")
 
-from analytics.functions import analyze_one_item
+from analytics.functions import analyze_one_item  # pylint: disable=wrong-import-position
 
-filename = 'tokenize_one.txt'
+FILENAME = "tokenize_one.txt"
 
-print('Read data from file...')
-with open(filename, 'r', encoding='utf-8') as f:
-    line = f.read()
-
-try:
-    _, language, *others = sys.argv
-except:
-    language = 'russian'
+line, language = load_from_file(FILENAME)
 
 one = line.strip()
-print(f'{one} has been loaded')
+print(f"{one} has been loaded")
 one_tokens = analyze_one_item(one, DICTIONARY, language=language)
-print('TOKENS:', one_tokens)
+print("TOKENS:", one_tokens)

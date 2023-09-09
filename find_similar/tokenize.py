@@ -7,19 +7,26 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import pymorphy2
 
-from find_similar.calc_models import LanguageNotFound
+from find_similar.calc_models import LanguageNotFoundException
 
 morph = pymorphy2.MorphAnalyzer()
 
-PUNCTUATION_SET = {";", ",", ".", "(", ")", "*", "-", ':'}
+PUNCTUATION_SET = {";", ",", ".", "(", ")", "*", "-", ":"}
 UNUSEFUL_WORDS = {
-    'шт', 'уп',
-    'x', 'х',  # одна букава x-английская, вторая х-русская
-    'mm', 'мм', 'сс', 'cc', 'm', 'м',
-    'подха',  # там есть подх.для
-    'тип',
-    'd',
-    'vz',
+    "шт",
+    "уп",
+    "x",
+    "х",  # одна букава x-английская, вторая х-русская
+    "mm",
+    "мм",
+    "сс",
+    "cc",
+    "m",
+    "м",
+    "подха",  # там есть подх.для
+    "тип",
+    "d",
+    "vz",
     # 'мя' # 2-мя, 3-мя, ...
 }
 
@@ -27,18 +34,27 @@ STOP_WORDS_NO_LANGUAGE = PUNCTUATION_SET.union(UNUSEFUL_WORDS)
 
 
 def get_stopwords_from_nltk(language: str):
+    """
+    Get stopwords for specific language
+    :param language: current text language
+    """
     try:
         stopwords_with_language = stopwords.words(language)
     except LookupError:
-        nltk.download('stopwords')
-        nltk.download('punkt')
+        nltk.download("stopwords")
+        nltk.download("punkt")
         stopwords_with_language = stopwords.words(language)
-    except OSError:
-        raise LanguageNotFound(language)
+    except OSError as exc:
+        raise LanguageNotFoundException(language) from exc
     return stopwords_with_language
 
 
 def add_nltk_stopwords(language: str, stop_words=None):
+    """
+    Add stopwords to STOP_WORDS_NO_LANGUAGE
+    :param language: current text language
+    :param stop_words: existing stop words
+    """
     if stop_words is None:
         stop_words = STOP_WORDS_NO_LANGUAGE
     stopwords_with_language = get_stopwords_from_nltk(language)
@@ -76,35 +92,35 @@ def replace_yio(text):
     :param text: Text to change
     :return: new text without ё with е
     """
-    return text.replace('ё', 'е')
+    return text.replace("ё", "е")
 
 
-def split_text_and_digits(s):
+def split_text_and_digits(text):
     """
     Split words and digits
-    :param s: enter text
+    :param text: enter text
     :return: list of separated texts
     """
     regex = r"^\D+[0]\D+$"
-    match = re.search(regex, s, re.MULTILINE)
+    match = re.search(regex, text, re.MULTILINE)
     if match:
-        return [s]
+        return [text]
     # Проверяем на вольты и амперы
     regex = r"\d+[.]?\d?[в|а|В|А|B|A|a]{1}$"
-    match = re.search(regex, s, re.MULTILINE)
+    match = re.search(regex, text, re.MULTILINE)
     if match:
-        s = match.group()
+        text = match.group()
         chars = "вВB"
-        for c in chars:
-            s = s.replace(c, 'v')
+        for char in chars:
+            text = text.replace(char, "v")
         chars = "аАaA"
-        for c in chars:
-            s = s.replace(c, 'ah')
+        for char in chars:
+            text = text.replace(char, "ah")
     # Делим цифры и буквы
     regex = r"\D+|\d+"
     texts = []
-    matches = re.finditer(regex, s, re.MULTILINE)
-    for matchNum, match in enumerate(matches, start=1):
+    matches = re.finditer(regex, text, re.MULTILINE)
+    for _, match in enumerate(matches, start=1):
         texts.append(match.group())
     return texts
 
@@ -122,21 +138,26 @@ class HashebleSet(set):
     """
     Special class set with hash to compare and sort two sets
     """
+
     def __hash__(self):
         return hash(str(self))
 
 
 def use_dictionary_multiple(tokens, dictionary):
-    for k, v in dictionary.items():
+    """
+    Use dictionary with multiple compliance
+    """
+    for k, val in dictionary.items():
         if k.issubset(tokens):
-            tokens = (tokens - k).union(v)
+            tokens = (tokens - k).union(val)
     return tokens
 
 
 def remove_part_speech(part_parse, parts=None, dictionary=None):
     """
     Remove variable part of speach from word
-    :param dictionary: default = None. If you want to replace one words to others you can send the dictionary.
+    :param dictionary: default = None.
+    If you want to replace one words to others you can send the dictionary.
     :param part_parse: pymorph2 object
     :param parts: set of part of speach
         NOUN	noun name
@@ -153,7 +174,7 @@ def remove_part_speech(part_parse, parts=None, dictionary=None):
     if dictionary and HashebleSet([result]) in dictionary:
         return result
     if parts is None:
-        parts = {'INFN', 'VERB'}
+        parts = {"INFN", "VERB"}
     for part in parts:
         if part in part_parse.tag:
             return None
@@ -174,15 +195,16 @@ def tokenize(text: str, language: str, dictionary=None, remove_stopwords=True):
     Main function to tokenize text
     :param text: Text to tokenize
     :param language: language for setting stop-words
-    :param dictionary: default = None. If you want to replace one words to others you can send the dictionary.
+    :param dictionary: default = None.
+    If you want to replace one words to others you can send the dictionary.
     :param remove_stopwords: default = True. Remove stopwords if True
     :return: Tokens
     """
     # replace these characters with spaces
-    punc_to_space = [',', '/', '-', '=', '.']
+    punc_to_space = [",", "/", "-", "=", "."]
     text = spacing(text, punc_to_space)
     # delete these characters (replace with an empty string)
-    punc_to_delete = ['Ø', '¶', '”']
+    punc_to_delete = ["Ø", "¶", "”"]
     text = replacing(text, punc_to_delete)
     text = replace_yio(text)
     tmp_set = set()
@@ -214,18 +236,18 @@ def tokenize(text: str, language: str, dictionary=None, remove_stopwords=True):
 def prepare_dictionary(dictionary):
     """
     Get special object from simple python dict
-    :param dictionary: default = None. If you want to replace one words to others you can send the dictionary.
+    :param dictionary: default = None.
+    If you want to replace one words to others you can send the dictionary.
     :return: dictionary of HashebleSet with data
     """
     result = {}
-    for k, v in dictionary.items():
+    for k, val in dictionary.items():
         # взять нормальные формы
         keys = k.split()
         keys = [get_normal_form(get_parsed_text(key)) for key in keys]
         new_k = HashebleSet(keys)
 
-        # v = get_normal_form(get_parsed_text(v))
-        values = v.split()
+        values = val.split()
         values = [get_normal_form(get_parsed_text(value)) for value in values]
 
         new_v = set(values)

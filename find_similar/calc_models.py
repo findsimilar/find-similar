@@ -1,10 +1,15 @@
+"""
+Models for calculation and compare
+"""
 from typing import Optional
-
-from pydantic import BaseModel
+from pydantic import BaseModel  # pylint: disable=no-name-in-module
 
 
 class Item(BaseModel):
-    id: Optional[int]
+    """
+    Item
+    """
+    id: Optional[int]  # pylint: disable=invalid-name
     label: str
     part_number: str
     id_shop: int
@@ -17,12 +22,16 @@ class Item(BaseModel):
 
 
 class TokenizeException(Exception):
-    pass
+    """
+    Base Exception class for Tokenize exceptions
+    """
 
 
-class LanguageNotFound(TokenizeException):
+class LanguageNotFoundException(TokenizeException):
+    """
+    Language not found error
+    """
+
     def __init__(self, language):
         self.language = language
-        super().__init__(
-            f"Language '{language}' is not supported by nltk module"
-        )
+        super().__init__(f"Language '{language}' is not supported by nltk module")
