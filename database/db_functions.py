@@ -1,3 +1,6 @@
+"""
+Functions to work with db data
+"""
 import logging
 
 from sqlalchemy.orm import joinedload
@@ -5,35 +8,26 @@ from sqlalchemy.orm import joinedload
 from find_similar.calc_functions import get_tokens, TokenText
 from find_similar.calc_models import Item
 from .db_main import get_session, engine
-from .db_models import Base, BaseItem, AnalogItem, BaseItemsTokens, AnalogItemsTokens, Shop
+from .db_models import (
+    Base,
+    BaseItem,
+    AnalogItem,
+    BaseItemsTokens,
+    AnalogItemsTokens,
+    Shop,
+)
 
 logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO,
 )
 logger = logging.getLogger(__name__)
 
 
-# def insert_item(item: Item) -> int:
-#     session = get_session()
-#     session.expire_on_commit = False
-#     if item.id_shop == 0:
-#         item_add = BaseItem()
-#     else:
-#         item_add = AnalogItem()
-#         item_add.id_shop = item.id_shop
-#         item_add.id_base_item = item.id_base_item
-#     item_add.label_text = item.label
-#     item_add.part_number = item.part_number
-#     try:
-#         session.add(item_add)
-#         session.commit()
-#     except Exception as e:
-#         logger.error(f"{e.__class__.__name__}: {e}")
-#         session.rollback()
-#     return item_add.id
-
-
 def get_all_base_items() -> list[Item]:
+    """
+    Get all base items
+    """
     session = get_session()
     base_items = session.query(BaseItem).options(joinedload(BaseItem.tokens)).all()
     base_items_list = []
@@ -43,18 +37,28 @@ def get_all_base_items() -> list[Item]:
             label=base_item.label_text,
             part_number=base_item.part_number,
             id_shop=0,
-            token_set=construct_token_set(base_item.tokens)
+            token_set=construct_token_set(base_item.tokens),
         )
         base_items_list.append(item)
     return base_items_list
 
 
 def get_all_analog_items(id_shop=None) -> list[Item]:
+    """
+    Get all analog items
+    """
     session = get_session()
     if id_shop:
-        analog_items = session.query(AnalogItem).filter_by(id_shop=id_shop).options(joinedload(AnalogItem.tokens)).all()
+        analog_items = (
+            session.query(AnalogItem)
+            .filter_by(id_shop=id_shop)
+            .options(joinedload(AnalogItem.tokens))
+            .all()
+        )
     else:
-        analog_items = session.query(AnalogItem).options(joinedload(AnalogItem.tokens)).all()
+        analog_items = (
+            session.query(AnalogItem).options(joinedload(AnalogItem.tokens)).all()
+        )
     analog_items_list = []
     for analog_item in analog_items:
         item = Item(
@@ -70,41 +74,11 @@ def get_all_analog_items(id_shop=None) -> list[Item]:
 
 
 def create_all():
+    """
+    Clear all db data
+    """
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
-
-
-# def insert_tokens(label: str, id_base_item: int):
-#     session = get_session()
-#     session.expire_on_commit = False
-#     token_set = tokenize(label, STOP_WORDS)
-#     token_bulk_inserts = []
-#     for token in token_set:
-#         if token:
-#             token_add = BaseItemsTokens()
-#             token_add.token=token
-#             token_add.id_item=id_base_item
-#             token_bulk_inserts.append(token_add)
-#     try:
-#         session.bulk_save_objects(token_bulk_inserts)
-#         session.commit()
-#     except Exception as e:
-#         logger.error(f"{e.__class__.__name__}: {e}")
-#         session.rollback()
-
-
-# def get_token_set(id_base_item: int) -> set:
-#     """
-#     Выбирает из БД токены для одного наименования.
-#     :param id_base_item:
-#     :return:
-#     """
-#     session = get_session()
-#     result_set = set()
-#     tokens = session.query(BaseItemsTokens).filter_by(id_item=id_base_item).all()
-#     for token in tokens:
-#         result_set.add(token.token)
-#     return result_set
 
 
 def construct_token_set(base_tokens: BaseItemsTokens) -> set:
@@ -130,13 +104,16 @@ def insert_item_bulk(items_list: list) -> int:
     try:
         session.bulk_save_objects(items_list)
         session.commit()
-    except Exception as e:
-        logger.error(f"{e.__class__.__name__}: {e}")
+    # TODO: catch more concrete exception
+    except Exception as ex:  # pylint: disable=broad-exception-caught
+        logger.error("{ex.__class__.__name__}: %s", str(ex))
         session.rollback()
-    # TODO Delete wrong old parts with 0 name
 
 
 def generate_base_tokens(dictionary=None):
+    """
+    Generate base tokens to db items for optimization
+    """
     session = get_session()
     session.expire_on_commit = False
     items = get_all_base_items()
@@ -151,12 +128,16 @@ def generate_base_tokens(dictionary=None):
     try:
         session.bulk_save_objects(items_tokens)
         session.commit()
-    except Exception as e:
-        logger.error(f"{e.__class__.__name__}: {e}")
+    # TODO: catch more concrete exception
+    except Exception as ex:  # pylint: disable=broad-exception-caught
+        logger.error("{ex.__class__.__name__}: %s", str(ex))
         session.rollback()
 
 
 def generate_analog_tokens(dictionary=None):
+    """
+    Generate tokens for analog items for optimization
+    """
     session = get_session()
     session.expire_on_commit = False
     items = get_all_analog_items()
@@ -171,17 +152,24 @@ def generate_analog_tokens(dictionary=None):
     try:
         session.bulk_save_objects(items_tokens)
         session.commit()
-    except Exception as e:
-        logger.error(f"{e.__class__.__name__}: {e}")
+    # TODO: catch more concrete exception
+    except Exception as ex:  # pylint: disable=broad-exception-caught
+        logger.error("{ex.__class__.__name__}: %s", str(ex))
         session.rollback()
 
 
 def generate_tokens(dictionary=None):
+    """
+    Generate tokens to all db items
+    """
     generate_base_tokens(dictionary)
     generate_analog_tokens(dictionary)
 
 
 def get_all_base_tokens(base_list, dictionary=None) -> list[TokenText]:
+    """
+    Get all base tokens from db
+    """
     tokens = []
     for base in base_list:
         token = TokenText(base.label, tokens=base.token_set, dictionary=dictionary)
@@ -191,6 +179,9 @@ def get_all_base_tokens(base_list, dictionary=None) -> list[TokenText]:
 
 
 def get_all_analog_tokens(id_shop=None, dictionary=None) -> list[TokenText]:
+    """
+    Get all analog tokens from db
+    """
     item_list = get_all_analog_items(id_shop)
     tokens = []
     for item in item_list:
@@ -201,7 +192,12 @@ def get_all_analog_tokens(id_shop=None, dictionary=None) -> list[TokenText]:
     return tokens
 
 
-def get_analog_token_by_name(name: str, id_shop: int, dictionary=None) -> list[TokenText]:
+def get_analog_token_by_name(
+    name: str, id_shop: int, dictionary=None
+) -> list[TokenText]:
+    """
+    Get analog tokens from db by id
+    """
     token_list = get_all_analog_tokens(id_shop, dictionary)
     tokens = []
     for token in token_list:
@@ -211,6 +207,9 @@ def get_analog_token_by_name(name: str, id_shop: int, dictionary=None) -> list[T
 
 
 def get_base_token_by_id(base_list, base_item_id: int, dictionary=None) -> TokenText:
+    """
+    Get base tokens from db by id
+    """
     token = None
     for base in base_list:
         if base.id == base_item_id:
@@ -220,18 +219,21 @@ def get_base_token_by_id(base_list, base_item_id: int, dictionary=None) -> Token
 
 
 def insert_shop(shop_name: str) -> int:
+    """
+    Add new shop item to database
+    """
     session = get_session()
     session.expire_on_commit = False
     shop_exists = session.query(Shop).filter_by(shop_name=shop_name).one_or_none()
     if shop_exists:
         return shop_exists.id
-    else:
-        new_shop = Shop()
-        new_shop.shop_name = shop_name
-        try:
-            session.add(new_shop)
-            session.commit()
-        except Exception as e:
-            logger.error(f"{e.__class__.__name__}: {e}")
-            session.rollback()
+    new_shop = Shop()
+    new_shop.shop_name = shop_name
+    try:
+        session.add(new_shop)
+        session.commit()
+    # TODO: catch more concrete exception
+    except Exception as ex:  # pylint: disable=broad-exception-caught
+        logger.error("{ex.__class__.__name__}: %s", str(ex))
+        session.rollback()
     return new_shop.id

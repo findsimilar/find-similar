@@ -1,19 +1,24 @@
+"""
+Check time one item loaded
+"""
 import sys
-from settings import DICTIONARY
+from settings import DICTIONARY  # pylint: disable=import-error
 
-sys.path.append('../')
+sys.path.append("../")
 
-from database.db_functions import get_all_base_items, get_all_base_tokens
-from analytics.functions import check_time
+from database.db_functions import get_all_base_items, get_all_base_tokens  # pylint: disable=wrong-import-position
+from analytics.functions import check_time  # pylint: disable=wrong-import-position
 
-print('Load base items...')
+print("Load base items...")
 
 base_list = get_all_base_items()
 base_list_tokens = get_all_base_tokens(base_list)
 
-print(f'{len(base_list)} items loaded')
+print(f"{len(base_list)} items loaded")
 
-count = 1
-time = check_time(number_count=count, base_items_tokens=base_list_tokens, dictionary=DICTIONARY)
+COUNT = 1
+time = check_time(
+    number_count=COUNT, base_items_tokens=base_list_tokens, dictionary=DICTIONARY
+)
 
-print(f'RESULT TIME FOR ONE ITEM (REPEAT {count} times) = {time}')
+print(f"RESULT TIME FOR ONE ITEM (REPEAT {COUNT} times) = {time}")

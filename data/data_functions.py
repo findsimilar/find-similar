@@ -1,3 +1,6 @@
+"""
+Function to work with external data
+"""
 import logging
 
 import pandas as pd
@@ -8,17 +11,24 @@ from database.db_functions import insert_item_bulk, insert_shop
 from database.db_models import AnalogItem, BaseItem
 
 logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO,
 )
 logger = logging.getLogger(__name__)
 
 
 def xls_parse(pd_excel: ExcelFile) -> pd.DataFrame:
+    """
+    Parsing Excel files
+    """
     pd_dataframe = pd_excel.parse(0)
     return pd_dataframe
 
 
 def pars_items_bulk(pd_excel: ExcelFile, contractor_info: list[ContractorInfo]):
+    """
+    Bulk parsing
+    """
     pd_dataframe = pd_excel.parse(SHEET_NUMBER, dtype=str)
     values = pd_dataframe.to_numpy()
 
@@ -38,7 +48,7 @@ def pars_items_bulk(pd_excel: ExcelFile, contractor_info: list[ContractorInfo]):
 
         for contractor in contractor_info:
             text = str(item_row[contractor.label_column_num])
-            if text != 'nan':
+            if text != "nan":
                 analog_item = AnalogItem()
                 analog_item.label_text = text
                 analog_item.part_number = str(item_row[contractor.part_column_num])
@@ -51,6 +61,9 @@ def pars_items_bulk(pd_excel: ExcelFile, contractor_info: list[ContractorInfo]):
 
 
 def get_contractors(info: dict) -> list[ContractorInfo]:
+    """
+    Get contractors
+    """
     contractors_list = []
     for name, columns in info.items():
         contractors_list.append(ContractorInfo(columns[0], columns[1], name))
