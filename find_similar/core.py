@@ -36,7 +36,7 @@ def find_similar(  # pylint: disable=too-many-arguments
     token_texts = []
     for text in texts:
         if not isinstance(text, TokenText):
-            text = TokenText(text)
+            text = TokenText(text, dictionary=dictionary, language=language, remove_stopwords=remove_stopwords)
         cos = calc_cosine_similarity_opt(text.tokens, text_to_check_tokens)
         text.cos = cos
         token_texts.append(text)
