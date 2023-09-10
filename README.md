@@ -1,15 +1,19 @@
 # FindSimilar
 
-[findsimilar.org][homepage]
-
 > User-friendly library to find similar objects
 
+* [To get acquainted][get_acquanted]
 * [Mission Statement][mission_statement]
 * [Open Source Collaboration][open_source_collaboration]
-* [Demo][demo_url]
 * [Installation][installation]
 * [Usage][usage]
 * [Development][development]
+
+## To Get Acquainted
+
+* To be familiar with FindSimilar, try our [Demo Project](http://demo.findsimilar.org)
+* Or if you like swagger try [Demo Project API](http://api.findsimilar.org) directly
+* You can also visit our [Official website][homepage]
 
 ## Mission Statement
 
@@ -37,10 +41,6 @@ We invite developers, data scientists, and enthusiasts from all backgrounds to j
 Get start with:
 * [Developer Guidelines](https://github.com/findsimilar/find-similar/blob/master/DEVELOPER_GUIDELINES.md)
 * [Developer Documentation](https://github.com/findsimilar/find-similar/blob/master/DEVELOPER_DOCUMENTATION.md)
-
-## Demo
-
-You can try simple demo example on [demo.findsimilar.org](http://demo.findsimilar.org)
 
 ## Installation:
 
@@ -142,9 +142,9 @@ python compare_two.py
 python tokenize_one.py
 ```
 
+[get_acquanted]: https://github.com/findsimilar/find-similar#to-get-acquanted
 [mission_statement]: https://github.com/findsimilar/find-similar#mission-statement
 [open_source_collaboration]: https://github.com/findsimilar/find-similar#open-source-collaboration
-[demo_url]: https://github.com/findsimilar/find-similar#demo
 [installation]: https://github.com/findsimilar/find-similar#installation
 [usage]: https://github.com/findsimilar/find-similar#usage-example
 [development]: https://github.com/findsimilar/find-similar#development
