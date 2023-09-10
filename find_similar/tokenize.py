@@ -5,11 +5,11 @@ import re
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-import pymorphy2
+import pymorphy3 as pymorphy
 
 from find_similar.calc_models import LanguageNotFoundException
 
-morph = pymorphy2.MorphAnalyzer()
+morph = pymorphy.MorphAnalyzer()
 
 PUNCTUATION_SET = {";", ",", ".", "(", ")", "*", "-", ":"}
 UNUSEFUL_WORDS = {
@@ -181,7 +181,7 @@ def remove_part_speech(part_parse, parts=None, dictionary=None):
     return result
 
 
-def get_parsed_text(word: str) -> pymorphy2:
+def get_parsed_text(word: str):
     """
     Get Parsed Text
     :param word: str word
