@@ -10,14 +10,6 @@ EXISTING_EXAMPLES = {
 }
 
 
-@pytest.fixture
-def mock_example_name():
-    """
-    Fixture for mock example filename
-    """
-    return 'mock'
-
-
 def test_examples_set(mock_example_name):
     """
     Test examples_set
