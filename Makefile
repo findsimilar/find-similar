@@ -8,8 +8,7 @@ docs:
 	pdoc ./find_similar/ -o ./.docs
 
 yamllint:
-	yamllint -d relaxed ./.github/workflows/
-	yamllint -d relaxed ./find_similar/examples/
+	yamllint -d relaxed .
 
 black:
 	black .
