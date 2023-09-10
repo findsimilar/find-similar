@@ -26,7 +26,13 @@ class TokenText:
     The main type to work with text tokens
     """
 
-    def __init__(self, text, tokens=None, dictionary=None, language='russian', remove_stopwords=True, **kwargs):
+    def __init__(self,  # pylint: disable=too-many-arguments
+                 text,
+                 tokens=None,
+                 dictionary=None,
+                 language='russian',
+                 remove_stopwords=True,
+                 **kwargs):
         """
         init method
         :param text: simple text
