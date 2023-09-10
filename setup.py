@@ -30,7 +30,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/findsimilar/find-similar",
     author="findsimilar",
-    author_email="help@findsimilar.org",
+    author_email="quill@craftsman.lol",
     keywords=["rating", "similarity", "tokens"],
     install_requires=[
         'pymorphy3==1.2.0',
@@ -39,7 +39,7 @@ setup(
     ],
     python_requires=">=3",
     classifiers=[
-        'Development Status :: 4 - Beta'
+        'Development Status :: 4 - Beta',
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
