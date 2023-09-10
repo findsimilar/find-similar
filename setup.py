@@ -21,7 +21,7 @@ def read(filename):
 
 setup(
     name="find-similar",
-    version="1.2.0",
+    version="1.2.1",
     packages=["find_similar"],
     include_package_data=True,
     license="MIT",
@@ -33,10 +33,20 @@ setup(
     author_email="help@findsimilar.org",
     keywords=["rating", "similarity", "tokens"],
     install_requires=[
-        "pymorphy2==0.9.1",
-        "pymorphy2-dicts-ru==2.4.417127.4579844",
+        'pymorphy3==1.2.0',
         "nltk==3.8.1",
         "pydantic==1.10.7",
     ],
     python_requires=">=3",
+    classifiers=[
+        'Development Status :: 4 - Beta'
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3",
+        "Topic :: Scientific/Engineering",
+        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Topic :: Scientific/Engineering :: Information Analysis",
+        "Topic :: Text Processing",
+        "Topic :: Text Processing :: Linguistic",
+    ],
 )
