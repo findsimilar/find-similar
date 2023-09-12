@@ -12,3 +12,15 @@ yamllint:
 
 black:
 	black .
+
+build:
+	python -m build
+
+install:
+	make build
+	pip install dist/*.whl
+
+uninstall:
+	pip uninstall find-similar
+	rm -rf dist
+	rm -rf find_similar.egg-info
