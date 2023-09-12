@@ -24,3 +24,7 @@ uninstall:
 	pip uninstall find-similar
 	rm -rf dist
 	rm -rf find_similar.egg-info
+
+pylint:
+	cd .. &\
+	pylint -j 0 --ignore venv $(shell pwd)
