@@ -21,7 +21,7 @@ def read(filename):
 
 setup(
     name="find-similar",
-    version="1.2.1",
+    version="1.3.0",
     packages=["find_similar"],
     include_package_data=True,
     license="MIT",
