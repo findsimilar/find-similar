@@ -19,12 +19,13 @@ def read(filename):
         return file.read()
 
 
-PACKAGE_NAME = "find-similar"
+PACKAGE_PYPI_NAME = 'find-similar'
+PACKAGE_NAME = "find_similar"
 
 setup(
-    name=PACKAGE_NAME,
-    version="1.3.1",
-    packages=["find_similar"],
+    name=PACKAGE_PYPI_NAME,
+    version="1.3.2",
+    packages=[PACKAGE_NAME],
     package_data={
         PACKAGE_NAME: ['*', '*/*', '*/*/*']
     },
