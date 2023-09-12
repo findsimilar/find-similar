@@ -19,10 +19,15 @@ def read(filename):
         return file.read()
 
 
+PACKAGE_NAME = "find-similar"
+
 setup(
-    name="find-similar",
-    version="1.3.0",
+    name=PACKAGE_NAME,
+    version="1.3.1",
     packages=["find_similar"],
+    package_data={
+        PACKAGE_NAME: ['*', '*/*', '*/*/*']
+    },
     include_package_data=True,
     license="MIT",
     description="Algorithm to define similarity rating between objects",
