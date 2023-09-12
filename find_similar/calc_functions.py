@@ -26,20 +26,31 @@ class TokenText:
     The main type to work with text tokens
     """
 
-    def __init__(self, text, tokens=None, dictionary=None, **kwargs):
+    def __init__(self,  # pylint: disable=too-many-arguments
+                 text,
+                 tokens=None,
+                 dictionary=None,
+                 language='russian',
+                 remove_stopwords=True,
+                 **kwargs):
         """
         init method
         :param text: simple text
         :param tokens: You can set already created tokens. Default = None
         :param dictionary: default = None.
         If you want to replace one words to others you can send the dictionary.
+        :param remove_stopwords: default = True.
+        :param language: default = russian.
         :param **kwargs: You can set any properties in the result object
         :return: cos similarity
         """
         self.text = text
         for k, val in kwargs.items():
             setattr(self, k, val)
-        self.tokens = tokens if tokens else get_tokens(text, dictionary=dictionary)
+        self.tokens = tokens if tokens else get_tokens(text,
+                                                       dictionary=dictionary,
+                                                       language=language,
+                                                       remove_stopwords=remove_stopwords)
 
     def __eq__(self, other):
         """
@@ -56,14 +67,15 @@ class TokenText:
         return f'TokenText(text="{self.text}", tokens={self.tokens})'
 
 
-def get_tokens(text, dictionary=None, language="russian") -> set:
+def get_tokens(text, dictionary=None, language="russian", remove_stopwords=True) -> set:
     """
     Get tokens from str text
     :param text: str text
     :param dictionary: default = None.
     If you want to replace one words to others you can send the dictionary
     :param language
+    :param remove_stopwords
     :return: tokes for text
     """
-    tokens = tokenize(text, language, dictionary)
+    tokens = tokenize(text, language, dictionary, remove_stopwords)
     return tokens
