@@ -27,4 +27,4 @@ uninstall:
 
 pylint:
 	cd .. &\
-	pylint -j 0 --ignore venv $(shell pwd)
+	pylint -j 0 --ignore venv --recursive=y $(shell pwd)
