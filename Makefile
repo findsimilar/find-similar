@@ -28,3 +28,7 @@ uninstall:
 pylint:
 	cd .. &\
 	pylint -j 0 --ignore venv --recursive=y $(shell pwd)
+
+lint:
+	make yamllint
+	make pylint
