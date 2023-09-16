@@ -1,9 +1,9 @@
-name: Partial-Pylint
+name: Full-Pylint
 
 on:
   push:
     branches:
-      - "!main"
+      - "main"
 
 jobs:
   build:
@@ -21,4 +21,4 @@ jobs:
         pip install -r dev_requirements.txt
     - name: Analysing the code with pylint and yamllint
       run: |
-        make lint
+        make full-lint

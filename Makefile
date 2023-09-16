@@ -29,6 +29,12 @@ pylint:
 	cd .. &\
 	pylint -j 0 --ignore venv --recursive=y $(shell pwd)
 
-lint:
+full-lint:
 	make yamllint
 	make pylint
+
+lint:
+	@if [ "$(shell git ls-files -m '*.py')" != "" ]; then\
+        pylint $(shell git ls-files -m '*.py');\
+        yamllint $(shell git ls-files -m '*.py');\
+    fi
