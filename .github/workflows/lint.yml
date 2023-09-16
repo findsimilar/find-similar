@@ -20,4 +20,4 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint and yamllint
       run: |
-        pylint $(git ls-files -m '*.py')
+        make lint
