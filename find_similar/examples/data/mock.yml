@@ -1,5 +1,6 @@
 text: "Mock"
 texts: [
-      "Mock example",
-      "This is for tests",
+      "Mock example.",
+      "This is for tests,",
+      "Mock example for tests",
   ]

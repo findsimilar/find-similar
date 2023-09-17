@@ -6,7 +6,8 @@ from find_similar.examples import examples_set, get_example
 
 
 EXISTING_EXAMPLES = {
-    'films-demo'
+    'films-demo',
+    'films-description',
 }
 
 
@@ -27,7 +28,7 @@ def test_get_example(mock_example_name):
     assert 'text' in example
     assert 'texts' in example
     assert example['text'] == 'Mock'
-    assert example['texts'] == ['Mock example', 'This is for tests']
+    assert example['texts'] == ['Mock example.', 'This is for tests,', 'Mock example for tests']
 
 
 def test_get_example_wrong_name():
