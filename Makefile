@@ -36,5 +36,5 @@ full-lint:
 lint:
 	@if [ "$(shell git ls-files -m '*.py')" != "" ]; then\
         pylint $(shell git ls-files -m '*.py');\
-        yamllint $(shell git ls-files -m '*.py');\
     fi
+	make yamllint
