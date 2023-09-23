@@ -1,3 +1,7 @@
+[![PyPi](https://img.shields.io/pypi/v/find-similar)](https://pypi.org/project/find-similar/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/find-similar)](https://pypi.org/project/find-similar/)
+[![PyPI - Downloads](https://static.pepy.tech/badge/find-similar)](https://www.pepy.tech/projects/find-similar)
+
 # FindSimilar
 
 > User-friendly library to find similar objects
