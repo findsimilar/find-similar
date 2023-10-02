@@ -45,6 +45,7 @@ class TokenText:
         :return: cos similarity
         """
         self.text = text
+        self.key = 0
         for k, val in kwargs.items():
             setattr(self, k, val)
         self.tokens = tokens if tokens else get_tokens(text,
@@ -79,3 +80,12 @@ def get_tokens(text, dictionary=None, language="russian", remove_stopwords=True)
     """
     tokens = tokenize(text, language, dictionary, remove_stopwords)
     return tokens
+
+
+def calc_keywords_rating(text, keywords):
+    rating = 0
+    for token in text.tokens:
+        for k, v in keywords.items():
+            if k == token:
+                rating = rating + v
+    return rating

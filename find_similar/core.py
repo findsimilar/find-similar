@@ -2,7 +2,7 @@
 Core module with search functions
 """
 
-from .calc_functions import TokenText, calc_cosine_similarity_opt
+from .calc_functions import TokenText, calc_cosine_similarity_opt, calc_keywords_rating
 from .tokenize import tokenize
 
 
@@ -14,6 +14,7 @@ def find_similar(  # pylint: disable=too-many-arguments
     count=5,
     dictionary=None,
     remove_stopwords=True,
+    keywords=None,
 ) -> list[TokenText]:
     """
     The main function to search similar texts.
@@ -22,6 +23,7 @@ def find_similar(  # pylint: disable=too-many-arguments
     :param language: Language, default='russian'
     :param count: Count results
     :param dictionary: default = None.
+    :param keywords: default = None.
     If you want to replace one words to others you can send the dictionary.
     :param remove_stopwords: default = True. Remove or not stopwords
     :return: Result list sorted by similarity percent
@@ -42,6 +44,9 @@ def find_similar(  # pylint: disable=too-many-arguments
                              remove_stopwords=remove_stopwords)
         cos = calc_cosine_similarity_opt(text.tokens, text_to_check_tokens)
         text.cos = cos
+        if keywords:
+            keywords_rating = calc_keywords_rating(text.tokens, keywords)
+            text.key = keywords_rating
         token_texts.append(text)
     text_rated_sorted = sorted(token_texts, key=lambda item: item.cos, reverse=True)
     return text_rated_sorted[:count]
