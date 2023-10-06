@@ -7,6 +7,9 @@ from find_similar.examples import examples_set, get_example
 
 EXISTING_EXAMPLES = {
     'films-demo',
+    'films-demo-ru',
+    'films-demo-ua',
+    'films-demo-tr',
     'films-description',
 }
 
