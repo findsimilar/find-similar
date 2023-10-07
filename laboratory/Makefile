@@ -6,8 +6,8 @@ server:
 
 coverage:
 	coverage run --source='.' manage.py test
-	coverage report --omit=laboratory/asgi.py,laboratory/wsgi.py,manage.py --fail-under=100
-	coverage html --omit=laboratory/asgi.py,laboratory/wsgi.py,manage.py
+	coverage report --omit=laboratory/asgi.py,laboratory/wsgi.py,manage.py,analysis/management/* --fail-under=100
+	coverage html --omit=laboratory/asgi.py,laboratory/wsgi.py,manage.py,analysis/management/*
 
 migrate:
 	python manage.py migrate

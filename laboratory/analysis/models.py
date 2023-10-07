@@ -1,5 +1,5 @@
 """
-Analysis models
+Analisys models
 """
 # from django.db import models
 

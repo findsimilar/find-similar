@@ -1,11 +1,11 @@
 """
 Tests form views
 """
-from django.test import TestCase
+from django.test import SimpleTestCase
 from analysis.forms import OneTextForm
 
 
-class TestTokenizeOneView(TestCase):
+class TestTokenizeOneView(SimpleTestCase):
     """
     Test TokenizeOneView
     """

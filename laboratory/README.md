@@ -31,3 +31,24 @@ from django.conf import settings
 find_similar = settings.FIND_SIMILAR
 find_similar('none', ['one', 'two'])
 ```
+
+## Management commands
+
+### Get tokens from one text
+
+Input:
+```commandline
+python manage.py tokenize_one "some text" "other text"
+```
+
+Output:
+```commandline
+Get tokens for some text...
+Done:
+{'text', 'some'}
+End
+Get tokens for other text...
+Done:
+{'text', 'other'}
+End
+```
