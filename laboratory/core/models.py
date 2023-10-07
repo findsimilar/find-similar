@@ -1,3 +1,12 @@
-# from django.db import models
+"""
+Models
+"""
+from django.conf import settings
 
-# Create your models here.
+
+def check_find_similar():
+    """
+    To check find_similar import first
+    """
+    settings.FIND_SIMILAR('none', ['one', 'two'])
+    return True
