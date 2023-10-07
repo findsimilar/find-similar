@@ -23,14 +23,20 @@ Use:
 ```python
 from django.conf import settings
 settings.FIND_SIMILAR('none', ['one', 'two'])
+settings.TOKENIZE('some text')
 ```
 
 Or if you don't like UPPER_CASE:
 ```python
 from django.conf import settings
 find_similar = settings.FIND_SIMILAR
+tokenize = settings.TOKENIZE
+
 find_similar('none', ['one', 'two'])
+tokenize('some text')
 ```
+
+Looks weird, please make pull request if you find a better way
 
 ## Management commands
 
