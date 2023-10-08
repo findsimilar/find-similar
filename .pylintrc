@@ -4,4 +4,5 @@ disable=
     E1101, #  Dynamic attributes
     W0511, #  Used when a warning note
     C0103, #  Pylint doesn't like id attribute
+    W0201, #  Attribute defined outside init method
 
