@@ -1,11 +1,11 @@
 """
 Tests
 """
-from django.test import TestCase
+from django.test import SimpleTestCase
 from .models import check_find_similar
 
 
-class FirstTest(TestCase):
+class FirstTest(SimpleTestCase):
     """
     FirstTest
     """

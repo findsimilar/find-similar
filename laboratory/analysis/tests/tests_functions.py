@@ -3,7 +3,7 @@ Tests for Analysis functions
 """
 from django.test import SimpleTestCase
 
-from analysis.functions import analyze_one_item
+from analysis.functions import analyze_one_item, analyze_two_items
 
 
 class TestFunctions(SimpleTestCase):
@@ -11,6 +11,9 @@ class TestFunctions(SimpleTestCase):
     Class for test all functions
     """
     def setUp(self):
+        self.one = 'one'
+        self.two = 'two'
+        self.one_two = 'one two'
         self.printer = print
 
         def mock_printer(*args, **kwargs):  # pylint: disable=unused-argument
@@ -40,14 +43,45 @@ class TestFunctions(SimpleTestCase):
         """
         Test for analyze one item
         """
-        text = 'one two'
-        tokens = analyze_one_item('one two', printer=self.testing_printer)
-        expected_tokens = {'one', 'two'}
+        tokens = analyze_one_item(self.one_two, printer=self.testing_printer)
+        expected_tokens = {self.one, self.two}
         self.assertEqual(tokens, expected_tokens)
-        excepted_prints = [
-            f'Get tokens for {text}...',
+        expected_prints = [
+            f'Get tokens for {self.one_two}...',
             'Done:',
             f'{expected_tokens}',
             'End',
         ]
-        self.assertEqual(self.testing_printer.results, excepted_prints)
+        self.assertEqual(self.testing_printer.results, expected_prints)
+
+    def test_analyze_two_items(self):
+        """
+        Test for analyze_two_items
+        """
+        similar_cos = 1.0
+        different_cos = 0.0
+        self.assertEqual(
+            analyze_two_items(self.one, self.one, printer=self.mock_printer),
+            similar_cos
+        )
+        self.assertEqual(
+            analyze_two_items(self.one, self.two, printer=self.testing_printer),
+            different_cos)
+        one_tokens = {self.one}
+        two_tokens = {self.two}
+        # prints
+        expected_prints = [
+            f'Get cos between "{self.one}" and "{self.two}"',
+            f'Get tokens for {self.one}...',
+            'Done:',
+            f'{one_tokens}',
+            'End',
+            f'Get tokens for {self.two}...',
+            'Done:',
+            f'{two_tokens}',
+            'End',
+            'Done',
+            f'cos = {different_cos}',
+            'End',
+        ]
+        self.assertEqual(self.testing_printer.results, expected_prints)

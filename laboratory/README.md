@@ -58,3 +58,31 @@ Done:
 {'text', 'other'}
 End
 ```
+
+### Get cos between two texts
+
+Input:
+```commandline
+python manage.py compare_two "one" "two"
+```
+
+Output:
+```commandline
+Get cos between "one" and "two"
+Get tokens for one...
+Done:
+{'one'}
+End
+Get tokens for two...
+Done:
+{'two'}
+End
+Done
+cos = 0.0
+End
+```
+
+With make:
+```commandline
+make one="one" two="two" compare_two
+```

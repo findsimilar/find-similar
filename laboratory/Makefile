@@ -11,3 +11,6 @@ coverage:
 
 migrate:
 	python manage.py migrate
+
+compare_two:
+	python manage.py compare_two "$(one)" "$(two)"
