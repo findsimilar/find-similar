@@ -8,17 +8,20 @@ from analysis.functions import analyze_two_items
 class Command(BaseCommand):
     """
     >> python manage.py compare_two "one" "two"
+    Start
     Get cos between "one" and "two"
+    Start
     Get tokens for one...
     Done:
     {'one'}
     End
+    Start
     Get tokens for two...
     Done:
     {'two'}
     End
-    Done
-    cos = 0.0
+    Done:
+    0
     End
     """
     help = "Get cos between two texts"

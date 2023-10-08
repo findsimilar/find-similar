@@ -49,10 +49,12 @@ python manage.py tokenize_one "some text" "other text"
 
 Output:
 ```commandline
+Start
 Get tokens for some text...
 Done:
 {'text', 'some'}
 End
+Start
 Get tokens for other text...
 Done:
 {'text', 'other'}
@@ -68,21 +70,45 @@ python manage.py compare_two "one" "two"
 
 Output:
 ```commandline
+Start
 Get cos between "one" and "two"
+Start
 Get tokens for one...
 Done:
 {'one'}
 End
+Start
 Get tokens for two...
 Done:
 {'two'}
 End
-Done
-cos = 0.0
+Done:
+0
 End
 ```
 
 With make:
 ```commandline
 make one="one" two="two" compare_two
+```
+
+### Example frequency analysis
+
+Input:
+```commandline
+python manage.py example_frequency_analysis "mock"
+```
+
+Output:
+```commandline
+Start
+Analyze "mock"...
+Done:
+(('mock', 2), ('example', 2), ('for', 2), ('tests', 2), ('this', 1), ('is', 1))
+End
+```
+
+With make:
+```commandline
+make example="mock" example_frequency_analysis
 ```

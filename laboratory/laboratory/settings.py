@@ -18,9 +18,12 @@ sys.path.append("../")
 from find_similar import find_similar  # pylint: disable=wrong-import-position
 from find_similar.tokenize import tokenize  # pylint: disable=wrong-import-position
 from find_similar.calc_functions import calc_cosine_similarity_opt  # pylint: disable=wrong-import-position
+from find_similar.examples.analyze import frequency_analysis # pylint: disable=wrong-import-position
+
 FIND_SIMILAR = find_similar
 TOKENIZE = tokenize
 CALC_COSINE_SIMILARITY_OPT = calc_cosine_similarity_opt
+FREQUENCY_ANALYSIS = frequency_analysis
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

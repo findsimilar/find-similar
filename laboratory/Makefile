@@ -14,3 +14,6 @@ migrate:
 
 compare_two:
 	python manage.py compare_two "$(one)" "$(two)"
+
+example_frequency_analysis:
+	python manage.py example_frequency_analysis "$(example)"

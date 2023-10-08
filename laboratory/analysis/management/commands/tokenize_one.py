@@ -8,13 +8,15 @@ from analysis.functions import analyze_one_item
 class Command(BaseCommand):
     """
     >> python manage.py tokenize_one "some text" "other text"
+    Start
     Get tokens for some text...
     Done:
     {'text', 'some'}
     End
+    Start
     Get tokens for other text...
     Done:
-    {'other', 'text'}
+    {'text', 'other'}
     End
     """
     help = "Get tokens from one text"
