@@ -2,7 +2,7 @@
 Core module with search functions
 """
 
-from .calc_functions import TokenText, calc_cosine_similarity_opt, calc_keywords_rating
+from .calc_functions import TokenText, calc_cosine_similarity_opt, calc_keywords_rating, sort_search_list
 from .tokenize import tokenize
 
 
@@ -45,8 +45,8 @@ def find_similar(  # pylint: disable=too-many-arguments
         cos = calc_cosine_similarity_opt(text.tokens, text_to_check_tokens)
         text.cos = cos
         if keywords:
-            keywords_rating = calc_keywords_rating(text.tokens, keywords)
+            keywords_rating = calc_keywords_rating(text, keywords)
             text.key = keywords_rating
         token_texts.append(text)
-    text_rated_sorted = sorted(token_texts, key=lambda item: item.cos, reverse=True)
+    text_rated_sorted = sort_search_list(token_texts, keywords=keywords)
     return text_rated_sorted[:count]

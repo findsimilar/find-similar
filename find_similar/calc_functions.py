@@ -86,6 +86,17 @@ def calc_keywords_rating(text, keywords):
     rating = 0
     for token in text.tokens:
         for k, v in keywords.items():
-            if k == token:
+            if str(k) == str(token):
                 rating = rating + v
     return rating
+
+
+def sort_search_list(token_texts, keywords=None):
+    text_sorted_by_cos = sorted(token_texts, key=lambda item: item.cos, reverse=True)
+    if keywords:
+        n = len(text_sorted_by_cos) - 1
+        for i in range(n):
+            for j in range(n - i):
+                if text_sorted_by_cos[j].key < text_sorted_by_cos[j + 1].key:
+                    text_sorted_by_cos[j], text_sorted_by_cos[j + 1] = text_sorted_by_cos[j + 1], text_sorted_by_cos[j]
+    return text_sorted_by_cos
