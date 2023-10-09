@@ -26,15 +26,8 @@ uninstall:
 	rm -rf find_similar.egg-info
 
 pylint:
-	cd .. &\
-	pylint -j 0 --ignore venv --recursive=y $(shell pwd)
-
-full-lint:
-	make yamllint
-	make pylint
+	pylint $(shell git ls-files '*.py')
 
 lint:
-	@if [ "$(shell git ls-files -m '*.py')" != "" ]; then\
-        pylint $(shell git ls-files -m '*.py');\
-    fi
 	make yamllint
+	make pylint

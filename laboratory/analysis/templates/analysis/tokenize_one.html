@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block main %}
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary">Get tokens</button>
+    </form>
+{% endblock %}
+{% block results %}
+    <h3>{{text}}</h3>
+    <ul class="list-group">
+        {% for token in tokens %}
+            <li class="list-group-item">
+                {{token}}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
