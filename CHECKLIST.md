@@ -10,7 +10,11 @@
 - [x] [Download Page](https://github.com/quillcraftsman/open-source-checklist#download-page)
 - [x] [Version Control Access](https://github.com/quillcraftsman/open-source-checklist#version-control-access)
 - [x] [Bug Tracker Access](https://github.com/quillcraftsman/open-source-checklist#bug-tracker-access)
-- [ ] [Communication Channels](https://github.com/quillcraftsman/open-source-checklist#communication-channels)
+- [X] [Communication Channels](https://github.com/quillcraftsman/open-source-checklist#communication-channels)
+- - [X] Discussions
+- - [ ] Mailing List
+- - [ ] Real-time chat
+- - [ ] Forum
 - [x] [Developer Guidelines](https://github.com/quillcraftsman/open-source-checklist#developer-guidelines)
 - [x] [Documentation](https://github.com/quillcraftsman/open-source-checklist#documentation)
 - [x] [Developer Documentation](https://github.com/quillcraftsman/open-source-checklist#developer-documentation)
@@ -22,8 +26,9 @@
 - [x] [Security Policy](https://github.com/quillcraftsman/open-source-checklist#security-policy)
 
 [CI and CD](https://github.com/quillcraftsman/open-source-checklist#ci-and-cd)
+- [X] Tests
+- [X] Test Coverage
 - [ ] Test Coverage 100%
-- [x] Tests
-- [x] Linters
-- [x] Build
-- [x] Deploy
+- [X] Linters
+- [X] Build
+- [X] Deploy
