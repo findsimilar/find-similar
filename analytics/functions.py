@@ -27,14 +27,14 @@ def check_item_rating(
 
 
 def get_item_find_list(
-    item_to_check: TokenText, base_items_tokens: list[TokenText], dictionary=None
+    item_to_check: TokenText, base_items_tokens: list[TokenText], dictionary=None, keywords=None
 ) -> list[TokenText]:
     """
     Возвращает список найденных базовых наименований TokenText,
     отсортированный по убыванию вероятности совпадения.
     """
     rating_cos_sort = find_similar(
-        item_to_check, base_items_tokens, count=-1, dictionary=dictionary
+        item_to_check, base_items_tokens, count=-1, dictionary=dictionary, keywords=keywords
     )
     return rating_cos_sort
 
@@ -103,7 +103,5 @@ def analyze_one_item(item, dictionary=None, language="russian"):
     """
     Analyze one item for tokenize
     """
-    print(item)
     tokens = tokenize(item, language=language, dictionary=dictionary)
-    print(tokens)
     return tokens
