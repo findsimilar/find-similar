@@ -38,24 +38,44 @@ def test_sort_search_list():
     """
     sort_search_list
     """
-    texts = [
-        TokenText("ночь"),
-        TokenText("улица"),
-        TokenText("фонарь"),
-    ]
-    token_texts = []
-    cos = 0
-    key = 3
-    for text in texts:
-        text.cos = cos + 0.2
-        cos = text.cos
-        text.key = key - 1
-        key = text.key
-        token_texts.append(text)
+    night_text = 'ночь'
+    street_text = 'улица'
+    lamp_text = 'фонарь'
+
+    night = TokenText(night_text)
+    street = TokenText(street_text)
+    lamp = TokenText(lamp_text)
+
+    token_texts = [night, street, lamp]
+
+    night.cos = 0.9
+    street.cos = 0.8
+    lamp.cos = 1
+
+    night.key = 1
+    street.key = 0
+    lamp.key = 0
+
     sort_with_keyword = sort_search_list(token_texts, {"аптека": 1})
     sort_without_keyword = sort_search_list(token_texts)
-    assert sort_with_keyword[0].text == "ночь"
-    assert sort_without_keyword[0].text == "фонарь"
+
+    assert [text.text for text in sort_with_keyword] == [night_text, lamp_text, street_text]
+    assert [text.text for text in sort_without_keyword] == [lamp_text, night_text, street_text]
+
+    night.cos = 1
+    street.cos = 0.8
+    lamp.cos = 0.9
+
+    night.key = 0
+    street.key = 1
+    lamp.key = 0
+
+    sort_with_keyword = sort_search_list(token_texts, {"аптека": 1})
+    sort_without_keyword = sort_search_list(token_texts)
+
+    # by key first
+    assert [text.text for text in sort_with_keyword] == [street_text, night_text, lamp_text]
+    assert [text.text for text in sort_without_keyword] == [night_text, lamp_text, street_text]
 
 
 class TestTokenText:

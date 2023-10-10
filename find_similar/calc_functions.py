@@ -108,8 +108,8 @@ def sort_search_list(token_texts, keywords=None):
     )
     if keywords:
         text_sorted_by_cos = sorted(
-            text_sorted_by_cos,
-            key=lambda item: item.key,
+            token_texts,
+            key=lambda item: (item.key, item.cos),
             reverse=True
         )
     return text_sorted_by_cos
