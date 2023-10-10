@@ -13,15 +13,17 @@
 - [ ] [Communication Channels](https://github.com/quillcraftsman/open-source-checklist#communication-channels)
 - [x] [Developer Guidelines](https://github.com/quillcraftsman/open-source-checklist#developer-guidelines)
 - [x] [Documentation](https://github.com/quillcraftsman/open-source-checklist#documentation)
-- [ ] [FAQ](https://github.com/quillcraftsman/open-source-checklist#faq)
-- [x] [Availability of Documentation](https://github.com/quillcraftsman/open-source-checklist#availability-of-documentation)
 - [x] [Developer Documentation](https://github.com/quillcraftsman/open-source-checklist#developer-documentation)
-- [ ] [Examples Output and Screenshots](https://github.com/quillcraftsman/open-source-checklist#examples-output-and-screenshots)
+- [x] [Availability of Documentation](https://github.com/quillcraftsman/open-source-checklist#availability-of-documentation)
+- [ ] [FAQ](https://github.com/quillcraftsman/open-source-checklist#faq)
+- [x] [Examples Output and Screenshots](https://github.com/quillcraftsman/open-source-checklist#examples-output-and-screenshots)
 - [x] [License](https://github.com/quillcraftsman/open-source-checklist#license)
+- [x] [Code of Conduct](https://github.com/quillcraftsman/open-source-checklist#code-of-conduct)
+- [x] [Security Policy](https://github.com/quillcraftsman/open-source-checklist#security-policy)
 
-[Technical infrastructure](https://github.com/quillcraftsman/open-source-checklist#technical-infrastructure)
-- [x] [Website](https://github.com/quillcraftsman/open-source-checklist#website)
-- [ ] [Mailing List](https://github.com/quillcraftsman/open-source-checklist#mailing-list)
-- [x] [Version Control](https://github.com/quillcraftsman/open-source-checklist#version-control)
-- [x] [Bug Tracking](https://github.com/quillcraftsman/open-source-checklist#bug-tracking)
-- [ ] [Real-Time Chat](https://github.com/quillcraftsman/open-source-checklist#real-time-chat)
+[CI and CD](https://github.com/quillcraftsman/open-source-checklist#ci-and-cd)
+- [ ] Test Coverage 100%
+- [x] Tests
+- [x] Linters
+- [x] Build
+- [x] Deploy

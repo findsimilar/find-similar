@@ -83,6 +83,10 @@ def get_tokens(text, dictionary=None, language="russian", remove_stopwords=True)
 
 
 def calc_keywords_rating(text, keywords):
+    """
+    Calc keywords rating
+    :param keywords: Keywords
+    """
     rating = 0
     for token in text.tokens:
         for k, v in keywords.items():
@@ -92,11 +96,20 @@ def calc_keywords_rating(text, keywords):
 
 
 def sort_search_list(token_texts, keywords=None):
-    text_sorted_by_cos = sorted(token_texts, key=lambda item: item.cos, reverse=True)
+    """
+    Sort search list
+    :param token_texts: Texts with tokens
+    :param keywords: Keywords, default None
+    """
+    text_sorted_by_cos = sorted(
+        token_texts,
+        key=lambda item: item.cos,
+        reverse=True
+    )
     if keywords:
-        n = len(text_sorted_by_cos) - 1
-        for i in range(n):
-            for j in range(n - i):
-                if text_sorted_by_cos[j].key < text_sorted_by_cos[j + 1].key:
-                    text_sorted_by_cos[j], text_sorted_by_cos[j + 1] = text_sorted_by_cos[j + 1], text_sorted_by_cos[j]
+        text_sorted_by_cos = sorted(
+            text_sorted_by_cos,
+            key=lambda item: item.key,
+            reverse=True
+        )
     return text_sorted_by_cos

@@ -36,7 +36,12 @@ print(f"{one} has been loaded")
 one_item = get_analog_token_by_name(one, id_shop=1)
 for item in one_item:
     find_list = get_item_find_list(item, base_list_tokens, DICTIONARY, keywords=keywords)
-    print("found:", find_list[TOP_ELEMENT].text, find_list[TOP_ELEMENT].cos, find_list[TOP_ELEMENT].key)
+    print(
+        "found:",
+        find_list[TOP_ELEMENT].text,
+        find_list[TOP_ELEMENT].cos,
+        find_list[TOP_ELEMENT].key
+    )
     item_must_be = get_base_token_by_id(base_list, item.id_base_item)
     print("must be:", item_must_be.text)
     print("one_rating:", find_list.index(item) + 1)

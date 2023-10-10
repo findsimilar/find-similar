@@ -41,8 +41,8 @@ except ValueError:
 else:
     filename = str(datetime.now()).replace(":", "-")  # pylint: disable=invalid-name
     path = os.path.join("reports", filename)
-    f = open(path, 'w', encoding='utf-8')
-    output = lambda s: f.write(f'{s}\n')
+    f = open(path, 'w', encoding='utf-8')  # pylint: disable=consider-using-with
+    output = lambda s: f.write(f'{s}\n')  # pylint: disable=unnecessary-lambda-assignment
     # with open(path, "w", encoding="utf-8") as f:
     #     output = lambda s: f.write(f"{s}\n")  # pylint: disable=unnecessary-lambda-assignment
 

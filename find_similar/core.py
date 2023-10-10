@@ -2,7 +2,12 @@
 Core module with search functions
 """
 
-from .calc_functions import TokenText, calc_cosine_similarity_opt, calc_keywords_rating, sort_search_list
+from .calc_functions import (
+    TokenText,
+    calc_cosine_similarity_opt,
+    calc_keywords_rating,
+    sort_search_list,
+)
 from .tokenize import tokenize
 
 
