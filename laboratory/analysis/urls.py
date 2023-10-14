@@ -8,4 +8,6 @@ app_name = 'analysis'
 
 urlpatterns = [
     path('tokenize-one/', views.TokenizeOneView.as_view(), name="tokenize_one"),
+    path('compare-two/', views.CompareTwoView.as_view(), name="compare_two"),
+    path('example-frequency/', views.ExampleFrequencyAnalysis.as_view(), name="example_frequency"),
 ]

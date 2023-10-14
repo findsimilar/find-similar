@@ -1,112 +1,315 @@
 """
-Tests form views
+Tests for views
 """
-from django.test import SimpleTestCase
-from analysis.forms import OneTextForm
+from django.urls import reverse
+from dry_tests import (
+    SimpleTestCase,
+    Request,
+    TrueResponse,
+    ContentValue,
+    Context,
+    POST,
+)
+from analysis.forms import OneTextForm, TwoTextForm
+from analysis.urls import app_name
 
-URL = '/analysis/tokenize-one/'
 
-
-class TestTokenizeOneViewGet(SimpleTestCase):
+class TestTokenizeOneView(SimpleTestCase):
     """
-    Test TokenizeOneView GET
+    Test class for One View
     """
-
     def setUp(self):
         """
-        Setup test data
+        Set Up Test Data
         """
-        # self.response = self.client.get(URL)
-        self.one = 'oneincdjm2283'
-        self.two = 'uekemee68'
+        self.url = reverse(f'{app_name}:tokenize_one')
+        self.one = 'one'
+        self.two = 'two'
         self.text = f'{self.one} {self.two}'
+        expected_url_params = f'?text={self.text}&token={self.one}&token={self.two}'
+        self.redirect_url=f'{self.url}{expected_url_params}'
 
-        def get_empty_params():
-            return self.client.get(URL)
-
-        def get_with_params():
-            return self.client.get(f'{URL}?text={self.text}&token={self.one}&token={self.two}')
-
-        self.response = get_empty_params
-        self.param_response = get_with_params
-
-    def test_status_code(self):
+    def test_get(self):
         """
-        check available
+        Test Get
         """
-        self.assertEqual(self.response().status_code, 200)
-
-    def test_form_in_context(self):
-        """
-        check context
-        """
-        context = self.response().context
-        form = 'form'
-        self.assertIn(form, context)
-        self.assertTrue(isinstance(context[form], OneTextForm))
-
-    def test_form_in_page(self):
-        """
-        check form on page
-        """
-        count = 1
+        request = Request(
+            url=self.url
+        )
         element = 'form'
-        self.assertContains(self.response(), f'<{element} method="post">', count)
-        self.assertContains(self.response(), f'</{element}>', count)
+        true_response = TrueResponse(
+            status_code=200,
+            context=Context(
+                types={'form': OneTextForm}
+            ),
+            content_values=[
+                ContentValue(
+                    value=f'<{element} method="post">',
+                    count=1,
+                ),
+                ContentValue(
+                    value=f'</{element}>',
+                    count=1,
+                ),
+            ]
+        )
+        current_response = request.get_url_response(self.client)
+        self.assertTrueResponse(current_response, true_response)
+        # extended check
 
-    def test_response_params(self):
-        """
-        Test response with params
-        And without
-        """
-        response = self.param_response()
-        self.assertContains(response, self.text, 1)
-        count = 2  # one in text
-        self.assertContains(response, self.one, count)
-        self.assertContains(response, self.two, count)
-        # without params
-        response = self.response()
-        self.assertNotContains(response, self.one)
-        self.assertNotContains(response, self.text)
+        # With params
+        request = Request(
+            url=self.redirect_url
+        )
+        true_response = TrueResponse(
+            context=Context(
+                items={
+                    'tokens': [self.one, self.two],
+                    'text': self.text
+                }
+            ),
+            content_values=[
+                ContentValue(
+                    value=self.one,
+                ),
+                ContentValue(
+                    value=self.two,
+                ),
+            ]
+        )
+        current_response = request.get_url_response(self.client)
+        self.assertTrueResponse(current_response, true_response)
 
-    def test_context_params(self):
+    def test_post(self):
         """
-        Test response context with params
-        And without
-        """
-        # with params
-        tokens = 'tokens'
-        text = 'text'
-        context = self.param_response().context
-        # text
-        self.assertIn(text, context)
-        self.assertEqual(context[text], self.text)
-        # tokens
-        self.assertIn(tokens, context)
-        self.assertEqual(context[tokens], [self.one, self.two])
-        # without params
-        context = self.response().context
-        self.assertNotIn(context[tokens], [])
-        self.assertEqual(context[text], '')
-
-
-class TestTokenizeOneViewPost(SimpleTestCase):
-    """
-    Test TokenizeOneView POST
-    """
-
-    def setUp(self):
-        """
-        Setup test data
+        Test Post
         """
         data = {
-            'text': 'one two'
+            'text': self.text
         }
-        self.response = self.client.post(URL, data=data)
+        request = Request(
+            url=self.url,
+            method=POST,
+            data=data,
+        )
+        true_response = TrueResponse(
+            status_code=302,
+            redirect_url=self.redirect_url
+        )
+        current_response = request.get_url_response(self.client)
+        self.assertTrueResponse(current_response, true_response)
 
-    def test_valid_redirect(self):
+
+class TestCompareTwo(SimpleTestCase):
+    """
+    Test Compare Two
+    """
+
+    def setUp(self):
         """
-        Test redirect with valid data
+        Set Up Test Data
         """
-        expected_url_params = '?text=one two&token=one&token=two'
-        self.assertRedirects(self.response, f'{URL}{expected_url_params}')
+        self.url = reverse(f'{app_name}:compare_two')
+        expected_url_params = '?one_text=one&two_text=one&cos=1.0'
+        self.redirect_url=f'{self.url}{expected_url_params}'
+
+    def test_get(self):
+        """
+        Test Get
+        """
+        request = Request(
+            url=self.url
+        )
+        element = 'form'
+        true_response = TrueResponse(
+            status_code=200,
+            context=Context(
+                keys=['form'],
+                types={
+                    'form': TwoTextForm,
+                }
+            ),
+            content_values=[
+                ContentValue(
+                    value=f'<{element} method="post">',
+                    count=1,
+                ),
+                ContentValue(
+                    value=f'</{element}>',
+                    count=1,
+                ),
+            ]
+        )
+        current_response = request.get_url_response(self.client)
+        self.assertTrueResponse(current_response, true_response)
+
+        data_items = {
+                    'one_text': 'one',
+                    'two_text': 'one',
+                    'cos': '1.0',
+                }
+
+        request = Request(
+            url=self.redirect_url
+        )
+        true_response = TrueResponse(
+            status_code=200,
+            context=Context(
+                items=data_items
+            ),
+            content_values=[
+                'one', '1.0'
+            ]
+        )
+        current_response = request.get_url_response(self.client)
+        self.assertTrueResponse(current_response, true_response)
+
+    def test_post(self):
+        """
+        Test Post
+        """
+        data = {
+            'one_text': 'one',
+            'two_text': 'one',
+        }
+        request = Request(
+            url=self.url,
+            method=POST,
+            data=data,
+        )
+        true_response = TrueResponse(
+            status_code=302,
+            redirect_url=self.redirect_url
+        )
+        current_response = request.get_url_response(self.client)
+        self.assertTrueResponse(current_response, true_response)
+
+
+class TestExampleFrequencyView(SimpleTestCase):
+    """
+    Test Example Frequency View
+    """
+
+    def setUp(self):
+        """
+        SetUp Test Data
+        """
+        self.text = 'mock'
+        self.url = reverse('analysis:example_frequency')
+        self.result = (('mock', 2), ('example', 2),
+                       ('for', 2), ('tests', 2), ('this', 1), ('is', 1))
+        expected_url_params = []
+        for key, value in self.result:
+            expected_url_params.append(f'{key}={value}')
+        self.expected_url_params = f'?text={self.text}&{"&".join(expected_url_params)}'
+        self.redirect_url=f'{self.url}{self.expected_url_params}'
+
+    def test_get(self):
+        """
+        Test get
+        """
+        request = Request(
+            url=self.url
+        )
+        element = 'form'
+        true_response = TrueResponse(
+            status_code=200,
+            context=Context(
+                keys=['form'],
+                types={'form': OneTextForm},
+            ),
+            content_values=[
+                ContentValue(
+                    value=f'<{element} method="post">',
+                    count=1,
+                ),
+                ContentValue(
+                    value=f'</{element}>',
+                    count=1,
+                ),
+            ]
+        )
+        current_response = request.get_url_response(self.client)
+        self.assertTrueResponse(current_response, true_response)
+
+        request = Request(
+            url=self.redirect_url
+        )
+
+        content_values = [self.text]
+        for key, value in self.result:
+            content_values.append(key)
+            content_values.append(value)
+
+        true_response = TrueResponse(
+            status_code=200,
+            context=Context(
+                items={
+                    'text': self.text,
+                    'result': self.result,
+               }
+            ),
+            content_values=content_values
+        )
+        current_response = request.get_url_response(self.client)
+        self.assertTrueResponse(current_response, true_response)
+
+        # Error
+        request = Request(
+            url=f'{self.url}?text={self.text}&error=some error'
+        )
+
+        true_response = TrueResponse(
+            status_code=200,
+            context=Context(
+                items={
+                    'text': self.text,
+                    'error': 'some error',
+                }
+            ),
+            content_values=[
+                'Some Error'
+            ]
+        )
+        current_response = request.get_url_response(self.client)
+        self.assertTrueResponse(current_response, true_response)
+
+    def test_post(self):
+        """
+        Test post
+        """
+        data = {
+            'text': self.text
+        }
+        request = Request(
+            url=self.url,
+            method=POST,
+            data=data,
+        )
+
+        true_response = TrueResponse(
+            status_code=302,
+            redirect_url=self.redirect_url
+        )
+        current_response = request.get_url_response(self.client)
+        self.assertTrueResponse(current_response, true_response)
+
+    def test_post_error_example(self):
+        """
+        Test post with error example
+        """
+        data = {
+            'text': 'unknown example value'
+        }
+        request = Request(
+            url=self.url,
+            method=POST,
+            data=data,
+        )
+
+        true_response = TrueResponse(
+            status_code=302,
+            redirect_url=f'{self.url}?text=unknown example value&error=example not found'
+        )
+        current_response = request.get_url_response(self.client)
+        self.assertTrueResponse(current_response, true_response)

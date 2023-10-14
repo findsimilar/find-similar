@@ -1,3 +1,11 @@
-# from django.shortcuts import render
+"""
+Core package views
+"""
+from django.views.generic import TemplateView
 
-# Create your views here.
+
+class IndexView(TemplateView):
+    """
+    Main page view
+    """
+    template_name = 'core/index.html'

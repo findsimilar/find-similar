@@ -3,8 +3,15 @@ Analysis views
 """
 from django.views.generic import FormView
 from django.urls import reverse
-from analysis.functions import analyze_one_item
-from .forms import OneTextForm
+from analysis.functions import (
+    analyze_one_item,
+    analyze_two_items,
+    example_frequency_analysis,
+)
+from .forms import (
+    OneTextForm,
+    TwoTextForm,
+)
 
 
 class TokenizeOneView(FormView):
@@ -36,4 +43,78 @@ class TokenizeOneView(FormView):
             url_params.append(param)
         url_params = f'?text={self.text}&{"&".join(url_params)}'
         url = f'{reverse("analysis:tokenize_one")}{url_params}'
+        return url
+
+
+class CompareTwoView(FormView):
+    """
+    For compare two items
+    """
+    form_class = TwoTextForm
+    template_name = 'analysis/compare_two.html'
+    success_url = '/analysis/compare-two/'
+
+    def form_valid(self, form):
+        self.one_text = form.cleaned_data['one_text']
+        self.two_text = form.cleaned_data['two_text']
+        self.cos = analyze_two_items(self.one_text, self.two_text)
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        url_params = f'?one_text={self.one_text}&two_text={self.two_text}&cos={self.cos}'
+        url = f'{reverse("analysis:compare_two")}{url_params}'
+        return url
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        data = self.request.GET
+        one_text = data.get('one_text', '')
+        two_text = data.get('two_text', '')
+        cos = data.get('cos', '')
+        context['one_text'] = one_text
+        context['two_text'] = two_text
+        context['cos'] = cos
+        return context
+
+
+class ExampleFrequencyAnalysis(FormView):
+    """
+    Example Frequency Analysis
+    """
+    form_class = OneTextForm
+    template_name = 'analysis/example_frequency.html'
+
+    def form_valid(self, form):
+        self.text = form.cleaned_data['text']
+        try:
+            self.result = example_frequency_analysis(self.text)
+            self.error = None
+        except FileNotFoundError:
+            self.error = 'example not found'
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        data = self.request.GET.dict()
+        text = data.pop('text', '')
+        context['text'] = text
+        error = data.get('error', None)
+        if error:
+            context['error'] = error
+        else:
+            result = []
+            for key, value in data.items():
+                result.append((key, int(value)))
+            context['result'] = tuple(result)
+        return context
+
+    def get_success_url(self):
+        if self.error:
+            url = f'{reverse("analysis:example_frequency")}?text={self.text}&error={self.error}'
+        else:
+            url_params = []
+            for key, value in self.result:
+                url_params.append(f'{key}={value}')
+            url_params = f'?text={self.text}&{"&".join(url_params)}'
+            url = f'{reverse("analysis:example_frequency")}{url_params}'
         return url

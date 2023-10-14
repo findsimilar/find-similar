@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block main %}
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary">Get Example Frequency</button>
+    </form>
+{% endblock %}
+{% block results %}
+    <h3>{{text}}</h3>
+    {% if error %}
+        <p class="text-danger">
+            {{error|title}}
+        </p>
+    {% else %}
+    <ul class="list-group">
+        {% for key, value in result %}
+            <li class="list-group-item">
+                {{key}}={{value}}
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}
