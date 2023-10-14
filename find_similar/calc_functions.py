@@ -59,7 +59,7 @@ class TokenText:
         :param other: second TokenText objects (self - is the first)
         :return: True or False, depends on object id
         """
-        return self.id == other.id_base_item
+        return self.id_base_item == other.id_base_item
 
     def __str__(self):
         return repr(self)

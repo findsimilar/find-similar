@@ -4,8 +4,6 @@ Db functions
 from find_similar.calc_functions import calc_cosine_similarity_opt
 from database.db_functions import get_base_token_by_id
 
-RATING_STEPS = [1, 5, 10, 25, 50, 100, 200, 300, 400]
-
 
 def get_report_proximity(base_list, ratings_total: list, output=print, edge=50):
     """

@@ -9,7 +9,7 @@ from find_similar.tokenize import tokenize
 from lab.settings import TOP_ELEMENT
 
 
-RATING_STEPS = [1, 5, 10, 25, 50, 100, 200, 300, 400]
+RATING_STEPS = [0, 1, 5, 10, 25, 50, 100, 200, 300, 400]
 
 
 def check_item_rating(
@@ -27,14 +27,14 @@ def check_item_rating(
 
 
 def get_item_find_list(
-    item_to_check: TokenText, base_items_tokens: list[TokenText], dictionary=None, keywords=None
+    item_to_check: TokenText, items_tokens_pile: list[TokenText], dictionary=None, keywords=None
 ) -> list[TokenText]:
     """
     Возвращает список найденных базовых наименований TokenText,
     отсортированный по убыванию вероятности совпадения.
     """
     rating_cos_sort = find_similar(
-        item_to_check, base_items_tokens, count=-1, dictionary=dictionary, keywords=keywords
+        item_to_check, items_tokens_pile, count=-1, dictionary=dictionary, keywords=keywords
     )
     return rating_cos_sort
 
@@ -50,19 +50,21 @@ def check_time(number_count, base_items_tokens: list[TokenText], dictionary=None
 
 
 def check_ratings_total(
-    base_items_tokens: list[TokenText], analog_items: list[TokenText], dictionary=None
+    items_pile_to_check: list[TokenText], items_pile: list[TokenText], dictionary=None
 ) -> list:
     """
     Возвращает список всех найденных позиций.
     """
     ratings_total = []
-    for analog_item in analog_items:
-        rating_cos_sort = get_item_find_list(analog_item, base_items_tokens, dictionary)
-        rating = rating_cos_sort.index(analog_item) + 1
+    for item_to_check in items_pile_to_check:
+        rating_cos_sort = get_item_find_list(item_to_check, items_pile, dictionary)
+        try:
+            rating = rating_cos_sort.index(item_to_check) + 1
+        except ValueError:
+            rating = 0
         # [то что искали, то что нашли, рейтинг]
-        # ratings_total.append([analog_item, rating_cos_sort[TOP_ELEMENT], rating])
         ratings_total.append(
-            ReportUnit(analog_item, rating_cos_sort[TOP_ELEMENT], rating)
+            ReportUnit(item_to_check, rating_cos_sort[TOP_ELEMENT], rating)
         )
     return ratings_total
 
@@ -78,25 +80,32 @@ def get_report_total(ratings_total: list, output=print):
     for _ in range(len(RATING_STEPS)):
         report_total.append(0)
     for rating in ratings_total:
+        prev_rating_step = 0
         for rating_step in RATING_STEPS:
-            if rating.rating in range(0, rating_step + 1):
+            if rating.rating in range(prev_rating_step, rating_step + 1):
                 slot = RATING_STEPS.index(rating_step)
                 report_total[slot] = report_total[slot] + 1
+            prev_rating_step = rating_step + 1
     total_count = len(ratings_total)
     output(f"Поиск выполнен для {total_count} позиций:")
-    count_percent_acc_tmp = 0
-    tmp = 0
+    count_acc = 0
+    count_percent_acc = 0
     for rating_step in RATING_STEPS:
-        count_acc = report_total[RATING_STEPS.index(rating_step)]
-        count = count_acc - tmp
-        count_percent_acc = count_acc / total_count * 100
-        count_percent = count_percent_acc - count_percent_acc_tmp
-        output(
-            f"топ {rating_step} -- {count_acc} ({round(count_percent_acc, 2)} %) "
-            f"-- {count} ({round(count_percent, 2)} %)"
-        )
-        count_percent_acc_tmp = count_percent_acc
-        tmp = count_acc
+        count = report_total[RATING_STEPS.index(rating_step)]
+        count_percent = count / total_count * 100
+        if rating_step == 0:
+            output(
+                f"*вероятность совпадения не определена для {count} ({round(count_percent, 2)} %) "
+            )
+            total_count = total_count - count
+        else:
+            if count > 0:
+                count_acc = count_acc + count
+                count_percent_acc = count_percent_acc + count_percent
+                output(
+                    f"топ {rating_step} -- {count_acc} ({round(count_percent_acc, 2)} %) "
+                    f"-- {count} ({round(count_percent, 2)} %)"
+                )
 
 
 def analyze_one_item(item, dictionary=None, language="russian"):

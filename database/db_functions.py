@@ -174,6 +174,7 @@ def get_all_base_tokens(base_list, dictionary=None) -> list[TokenText]:
     for base in base_list:
         token = TokenText(base.label, tokens=base.token_set, dictionary=dictionary)
         token.id = base.id
+        token.id_base_item = base.id
         tokens.append(token)
     return tokens
 
