@@ -118,7 +118,7 @@ class TestTokenText:
         """
         Test eq magic method
         """
-        one_text = TokenText("one text", id=1)
+        one_text = TokenText("one text", id_base_item=1)
         two_text = TokenText("one text", id_base_item=1)
         assert one_text == two_text
 
