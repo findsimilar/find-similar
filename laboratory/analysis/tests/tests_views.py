@@ -53,7 +53,7 @@ class TestTokenizeOneView(SimpleTestCase):
                 ),
             ]
         )
-        current_response = request.get_url_response(self.client)
+        current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
         # extended check
 
@@ -77,7 +77,7 @@ class TestTokenizeOneView(SimpleTestCase):
                 ),
             ]
         )
-        current_response = request.get_url_response(self.client)
+        current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
 
     def test_post(self):
@@ -96,7 +96,7 @@ class TestTokenizeOneView(SimpleTestCase):
             status_code=302,
             redirect_url=self.redirect_url
         )
-        current_response = request.get_url_response(self.client)
+        current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
 
 
@@ -140,7 +140,7 @@ class TestCompareTwo(SimpleTestCase):
                 ),
             ]
         )
-        current_response = request.get_url_response(self.client)
+        current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
 
         data_items = {
@@ -161,7 +161,7 @@ class TestCompareTwo(SimpleTestCase):
                 'one', '1.0'
             ]
         )
-        current_response = request.get_url_response(self.client)
+        current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
 
     def test_post(self):
@@ -181,7 +181,7 @@ class TestCompareTwo(SimpleTestCase):
             status_code=302,
             redirect_url=self.redirect_url
         )
-        current_response = request.get_url_response(self.client)
+        current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
 
 
@@ -229,7 +229,7 @@ class TestExampleFrequencyView(SimpleTestCase):
                 ),
             ]
         )
-        current_response = request.get_url_response(self.client)
+        current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
 
         request = Request(
@@ -251,7 +251,7 @@ class TestExampleFrequencyView(SimpleTestCase):
             ),
             content_values=content_values
         )
-        current_response = request.get_url_response(self.client)
+        current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
 
         # Error
@@ -271,7 +271,7 @@ class TestExampleFrequencyView(SimpleTestCase):
                 'Some Error'
             ]
         )
-        current_response = request.get_url_response(self.client)
+        current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
 
     def test_post(self):
@@ -291,7 +291,7 @@ class TestExampleFrequencyView(SimpleTestCase):
             status_code=302,
             redirect_url=self.redirect_url
         )
-        current_response = request.get_url_response(self.client)
+        current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
 
     def test_post_error_example(self):
@@ -311,5 +311,5 @@ class TestExampleFrequencyView(SimpleTestCase):
             status_code=302,
             redirect_url=f'{self.url}?text=unknown example value&error=example not found'
         )
-        current_response = request.get_url_response(self.client)
+        current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)

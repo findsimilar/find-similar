@@ -79,3 +79,32 @@ def example_frequency_analysis(example):
     """
     result = settings.FREQUENCY_ANALYSIS(example)
     return result
+
+
+def total_rating(to_search, match_list, find_similar):
+    results = {}
+    all_list = []
+    for line in match_list:
+        all_list += line
+
+    for search in to_search:
+        similars = find_similar(search, all_list)
+        print('search', search, 'similars', similars)
+        for line in match_list:
+            if search in line:
+                print('line', line)
+                line_count = len(line)
+                print('SEARCH', search)
+                print('similars', similars)
+                similars = similars[:line_count]
+                print('short similars', similars)
+                similars = [item['name'] for item in similars]
+                find_count = 0
+                for item in line:
+                    if item in similars:
+                        find_count += 1
+                result = f'{find_count}/{line_count}'
+                print('result', result)
+                results[search] = result
+
+    return results

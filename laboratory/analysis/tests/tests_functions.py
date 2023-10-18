@@ -8,6 +8,7 @@ from analysis.functions import (
     analyze_one_item,
     analyze_two_items,
     example_frequency_analysis,
+    total_rating,
 )
 
 
@@ -197,3 +198,39 @@ class TestFunctions(SimpleTestCase):
             example_name,
             printer=self.testing_printer
         ), expected_result)
+
+    def test_use_match_list(self):
+        match_list = [
+            [
+                'one', 'uno', 'one or uno',
+            ],
+            [
+                'two', 'dos', 'two or dos'
+            ]
+        ]
+
+        def find_similar_mock(  # pylint: disable=too-many-arguments
+                text_to_check,
+                texts,
+                language="russian",
+                count=5,
+                dictionary=None,
+                remove_stopwords=True,
+                keywords=None,
+        ):
+            return [
+                {'name': 'one', 'cos': 1.0},
+                {'name': 'two', 'cos': 1.0},
+                {'name': 'uno', 'cos': 0.9},
+                {'name': 'one or uno', 'cos': 0.5},
+                {'name': 'dos', 'cos': 0.0},
+                {'name': 'two or dos', 'cos': 0.0},
+            ]
+
+        to_search = ['one', 'two']
+        results = total_rating(to_search, match_list, find_similar_mock)
+        excepted_results = {
+            'one': '2/3',
+            'two': '1/3',
+        }
+        self.assertEqual(results, excepted_results)

@@ -1,6 +1,9 @@
 test:
 	python manage.py test
 
+test-proximity:
+	python manage.py test analysis.tests.tests_proximity
+
 server:
 	python manage.py runserver
 

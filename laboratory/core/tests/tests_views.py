@@ -34,5 +34,5 @@ class TestIndexView(SimpleTestCase):
                 '<h1>Still just main Page...</h1>'
             ]
         )
-        current_response = request.get_url_response(self.client)
+        current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
