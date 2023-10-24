@@ -32,3 +32,6 @@ class LoadTrainingDataForm(forms.Form):
     excel_file = forms.FileField(max_length=128, widget=forms.FileInput(attrs={
         'class': 'form-control'
     }))
+    sheet_name = forms.IntegerField(required=False, initial=0, widget=forms.NumberInput(attrs={
+        'class': 'form-control'
+    }))

@@ -68,10 +68,11 @@ class LoadTrainingDataFormSimpleTestCase(SimpleTestCase):
         """
         true_form = TrueForm(
             fields=Fields(
-                count=2,
+                count=3,
                 types={
                     'name': forms.CharField,
                     'excel_file': forms.FileField,
+                    'sheet_name': forms.IntegerField,
                 }
             )
         )

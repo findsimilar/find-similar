@@ -1,6 +1,7 @@
 """
 Tests for views
 """
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 from dry_tests import (
     TestCase,
@@ -12,6 +13,8 @@ from dry_tests import (
     POST,
 )
 from analysis.forms import OneTextForm, TwoTextForm, LoadTrainingDataForm
+from analysis.models import TrainingData
+from analysis.tests.data import get_2x2_filepath
 from analysis.urls import app_name
 
 
@@ -315,17 +318,48 @@ class LoadTrainingDataViewTestCase(TestCase):
                     'form': LoadTrainingDataForm
                 },
             ),
-            content_values=FORM_CONTENT_VALUES,
+            content_values=[
+                ContentValue(
+                    value='<form method="post" enctype="multipart/form-data">',
+                    count=1,
+                ),
+                ContentValue(
+                    value='</form>',
+                    count=1,
+                ),
+            ],
         )
         current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
 
     def test_post(self):
+        filepath = get_2x2_filepath()
+        excel_file = SimpleUploadedFile(filepath, open(filepath, 'rb').read())
+        name = 'first'
         data = {
-
+            'name': name,
+            'excel_file': excel_file,
         }
         request = Request(
             url=self.url,
             method=POST,
             data=data,
         )
+        true_response = TrueResponse(
+            status_code=302,
+        )
+
+        self.assertFalse(TrainingData.objects.filter(name=name).exists())
+
+        current_response = request.get_response(self.client)
+        self.assertTrueResponse(current_response, true_response)
+        # true model has been created
+
+        self.assertTrue(TrainingData.objects.filter(name=name).exists())
+
+        training_data = TrainingData.objects.get(name=name)
+        redirect_url = reverse('analysis:training_data', kwargs={'pk': training_data.pk})
+        true_response = TrueResponse(
+            redirect_url=redirect_url,
+        )
+        self.assertTrueResponse(current_response, true_response)
