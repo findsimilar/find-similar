@@ -2,8 +2,8 @@
 Analysis views
 """
 import os
-from django.views.generic import FormView
-from django.urls import reverse
+from django.views.generic import FormView, DetailView, ListView, DeleteView
+from django.urls import reverse, reverse_lazy
 from django.conf import settings
 from analysis.functions import (
     analyze_one_item,
@@ -15,6 +15,7 @@ from .forms import (
     OneTextForm,
     TwoTextForm, LoadTrainingDataForm,
 )
+from .models import TrainingData
 
 
 class TokenizeOneView(FormView):
@@ -144,3 +145,20 @@ class LoadTrainingDataView(FormView):
 
     def get_success_url(self):
         return reverse('analysis:training_data', kwargs={'pk': self.training_data.pk})
+
+
+class TrainingDataDetailView(DetailView):
+    model = TrainingData
+    template_name = 'analysis/training_data.html'
+
+
+class TrainingDataListView(ListView):
+    model = TrainingData
+    template_name = 'analysis/training_data_list.html'
+    ordering = '-update'
+
+
+class TrainingDataDeleteView(DeleteView):
+    model = TrainingData
+    template_name = 'analysis/training_data_delete_confirm.html'
+    success_url = reverse_lazy('analysis:training_data_list')

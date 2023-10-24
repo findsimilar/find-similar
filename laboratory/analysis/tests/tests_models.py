@@ -22,3 +22,9 @@ class TrainingDataTestCase(TestCase):
 
     def test_data_from_json(self):
         self.assertTrue(self.dataframe.equals(self.training_data.get_dataframe()))
+
+    def test_count(self):
+        self.assertEqual(len(self.training_data.get_dataframe().columns), 2)
+        self.assertEqual(len(self.training_data.get_dataframe().index), 2)
+        self.assertEqual(self.training_data.columns_count, 2)
+        self.assertEqual(self.training_data.rows_count, 2)

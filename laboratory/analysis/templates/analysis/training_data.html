@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block main %}
+    <h2>{{object.name}}</h2>
+{% endblock %}
+{% block results %}
+    {% with object.get_dataframe as data %}
+    <table class="table">
+        <tr>
+            {% for column in data.columns %}
+                <th>
+                    {{column}}
+                </th>
+            {% endfor %}
+        </tr>
+        {% for index, row in data.iterrows %}
+          <tr>
+            {% for cell in row %}
+              <td>
+                {{cell}}
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+    </table>
+    {% endwith %}
+<p></p>
+<a class="btn btn-danger" href="{% url 'analysis:delete_training_data' pk=object.pk %}">Delete</a>
+{% endblock %}

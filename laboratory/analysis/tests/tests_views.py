@@ -14,8 +14,9 @@ from dry_tests import (
 )
 from analysis.forms import OneTextForm, TwoTextForm, LoadTrainingDataForm
 from analysis.models import TrainingData
-from analysis.tests.data import get_2x2_filepath
+from analysis.tests.data import get_2x2_filepath, get_2x2_training_data
 from analysis.urls import app_name
+from analysis.functions import load_training_data
 
 
 FORM_CONTENT_VALUES = [
@@ -362,4 +363,109 @@ class LoadTrainingDataViewTestCase(TestCase):
         true_response = TrueResponse(
             redirect_url=redirect_url,
         )
+        self.assertTrueResponse(current_response, true_response)
+
+
+class TrainingDataDetailViewTestCase(TestCase):
+
+    def setUp(self):
+        self.training_data = get_2x2_training_data()
+        self.url = reverse('analysis:training_data', kwargs={'pk': self.training_data.pk})
+
+    def test_get(self):
+        request = Request(
+            url=self.url,
+        )
+
+        content_values = [
+            self.training_data.name,
+        ]
+
+        dataframe = self.training_data.get_dataframe()
+
+        # add headers
+        columns = dataframe.columns
+        for column in columns:
+            content_values.append(column)
+            data_list = dataframe[column].values.tolist()
+            content_values += data_list
+
+        true_response = TrueResponse(
+            status_code=200,
+            context=Context(
+                keys=['object'],
+                items={
+                    'object': self.training_data
+                }
+            ),
+            content_values=content_values
+        )
+
+        current_response = request.get_response(self.client)
+        self.assertTrueResponse(current_response, true_response)
+
+
+class TrainingDataListViewTestCase(TestCase):
+
+    def setUp(self):
+        self.url = reverse('analysis:training_data_list')
+        self.training_data_list = [get_2x2_training_data('first'), get_2x2_training_data('second')]
+
+    def test_get(self):
+        request = Request(
+            url=self.url
+        )
+        true_response = TrueResponse(
+            status_code=200,
+            context=Context(
+                keys=['object_list'],
+            ),
+            content_values=[item.name for item in self.training_data_list]
+        )
+        current_response = request.get_response(self.client)
+        self.assertTrueResponse(current_response, true_response)
+        self.assertQuerySetEqual(current_response.context['object_list'], self.training_data_list, ordered=False)
+
+
+class TrainingDataDeleteView(TestCase):
+
+    def setUp(self):
+        self.training_data = get_2x2_training_data()
+        self.url = reverse('analysis:delete_training_data', kwargs={'pk': self.training_data.pk})
+
+    def test_get(self):
+        request = Request(
+            url=self.url,
+        )
+
+        content_values = [
+            self.training_data.name,
+        ]
+
+        true_response = TrueResponse(
+            status_code=200,
+            context=Context(
+                keys=['object'],
+                items={
+                    'object': self.training_data
+                }
+            ),
+            content_values=content_values
+        )
+
+        current_response = request.get_response(self.client)
+        self.assertTrueResponse(current_response, true_response)
+
+    def test_post(self):
+        request = Request(
+            url=self.url,
+            method=POST,
+        )
+
+        true_response = TrueResponse(
+            status_code=302,
+            redirect_url=reverse('analysis:training_data_list')
+        )
+
+        current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
