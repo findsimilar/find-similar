@@ -140,7 +140,9 @@ class LoadTrainingDataView(FormView):
         excel_file = form.cleaned_data['excel_file']
         uploaded_path = self.handle_uploaded_file(excel_file)
         name = data['name']
-        self.training_data = load_training_data(name=name, filepath=uploaded_path)
+        sheet_name = data.get('sheet_name', 0)
+        print('SHEET_NAME', sheet_name)
+        self.training_data = load_training_data(name=name, filepath=uploaded_path, sheet_name=sheet_name)
         return super().form_valid(form)
 
     def get_success_url(self):

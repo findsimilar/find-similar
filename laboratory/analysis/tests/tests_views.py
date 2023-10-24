@@ -340,6 +340,7 @@ class LoadTrainingDataViewTestCase(TestCase):
         data = {
             'name': name,
             'excel_file': excel_file,
+            'sheet_name': 0,
         }
         request = Request(
             url=self.url,
