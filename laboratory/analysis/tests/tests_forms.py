@@ -7,6 +7,7 @@ from dry_tests.models import Fields, TrueForm
 from analysis.forms import (
     OneTextForm,
     TwoTextForm,
+    LoadTrainingDataForm,
 )
 
 
@@ -53,4 +54,27 @@ class TestTwoTextForm(SimpleTestCase):
         )
 
         current_form = TwoTextForm()
+        self.assertTrueForm(current_form, true_form)
+
+
+class LoadTrainingDataFormSimpleTestCase(SimpleTestCase):
+    """
+    Load traning data test
+    """
+
+    def test_fields(self):
+        """
+        Test available fields
+        """
+        true_form = TrueForm(
+            fields=Fields(
+                count=2,
+                types={
+                    'name': forms.CharField,
+                    'excel_file': forms.FileField,
+                }
+            )
+        )
+
+        current_form = LoadTrainingDataForm()
         self.assertTrueForm(current_form, true_form)

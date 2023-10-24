@@ -27,6 +27,10 @@ class TestUrls(SimpleTestCase):
             {
                 'url': 'example_frequency',
                 'reverse': 'example-frequency/',
+            },
+            {
+                'url': 'load_training_data',
+                'reverse': 'load-training-data/',
             }
         ]
         for url in urls:

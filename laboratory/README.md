@@ -112,3 +112,24 @@ With make:
 ```commandline
 make example="mock" example_frequency_analysis
 ```
+
+### Load training data
+
+Input:
+```commandline
+python manage.py load_training_data 2x2 analysis/tests/data/2x2.xlsx 0
+```
+
+Output:
+```commandline
+Start
+Loading data from "analysis/tests/data/2x2.xlsx"...
+Done:
+TrainingData object (None)
+End
+```
+
+With make:
+```commandline
+make load_traning_data name=2x2 filepath=analysis/tests/data/2x2.xlsx sheet_name=0
+```

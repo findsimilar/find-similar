@@ -10,7 +10,7 @@ from analysis.functions import (
 )
 from .forms import (
     OneTextForm,
-    TwoTextForm,
+    TwoTextForm, LoadTrainingDataForm,
 )
 
 
@@ -118,3 +118,8 @@ class ExampleFrequencyAnalysis(FormView):
             url_params = f'?text={self.text}&{"&".join(url_params)}'
             url = f'{reverse("analysis:example_frequency")}{url_params}'
         return url
+
+
+class LoadTrainingDataView(FormView):
+    form_class = LoadTrainingDataForm
+    template_name = 'analysis/example_frequency.html'

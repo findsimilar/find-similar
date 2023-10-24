@@ -3,6 +3,7 @@ Tests for views
 """
 from django.urls import reverse
 from dry_tests import (
+    TestCase,
     SimpleTestCase,
     Request,
     TrueResponse,
@@ -10,8 +11,20 @@ from dry_tests import (
     Context,
     POST,
 )
-from analysis.forms import OneTextForm, TwoTextForm
+from analysis.forms import OneTextForm, TwoTextForm, LoadTrainingDataForm
 from analysis.urls import app_name
+
+
+FORM_CONTENT_VALUES = [
+                ContentValue(
+                    value='<form method="post">',
+                    count=1,
+                ),
+                ContentValue(
+                    value='</form>',
+                    count=1,
+                ),
+            ]
 
 
 class TestTokenizeOneView(SimpleTestCase):
@@ -36,22 +49,12 @@ class TestTokenizeOneView(SimpleTestCase):
         request = Request(
             url=self.url
         )
-        element = 'form'
         true_response = TrueResponse(
             status_code=200,
             context=Context(
                 types={'form': OneTextForm}
             ),
-            content_values=[
-                ContentValue(
-                    value=f'<{element} method="post">',
-                    count=1,
-                ),
-                ContentValue(
-                    value=f'</{element}>',
-                    count=1,
-                ),
-            ]
+            content_values=FORM_CONTENT_VALUES
         )
         current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
@@ -120,7 +123,6 @@ class TestCompareTwo(SimpleTestCase):
         request = Request(
             url=self.url
         )
-        element = 'form'
         true_response = TrueResponse(
             status_code=200,
             context=Context(
@@ -129,16 +131,7 @@ class TestCompareTwo(SimpleTestCase):
                     'form': TwoTextForm,
                 }
             ),
-            content_values=[
-                ContentValue(
-                    value=f'<{element} method="post">',
-                    count=1,
-                ),
-                ContentValue(
-                    value=f'</{element}>',
-                    count=1,
-                ),
-            ]
+            content_values=FORM_CONTENT_VALUES
         )
         current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
@@ -211,23 +204,13 @@ class TestExampleFrequencyView(SimpleTestCase):
         request = Request(
             url=self.url
         )
-        element = 'form'
         true_response = TrueResponse(
             status_code=200,
             context=Context(
                 keys=['form'],
                 types={'form': OneTextForm},
             ),
-            content_values=[
-                ContentValue(
-                    value=f'<{element} method="post">',
-                    count=1,
-                ),
-                ContentValue(
-                    value=f'</{element}>',
-                    count=1,
-                ),
-            ]
+            content_values=FORM_CONTENT_VALUES
         )
         current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
@@ -313,3 +296,36 @@ class TestExampleFrequencyView(SimpleTestCase):
         )
         current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
+
+
+class LoadTrainingDataViewTestCase(TestCase):
+
+    def setUp(self):
+        self.url = reverse('analysis:load_training_data')
+
+    def test_get(self):
+        request = Request(
+            url=self.url,
+        )
+        true_response = TrueResponse(
+            status_code=200,
+            context=Context(
+                keys=['form'],
+                types={
+                    'form': LoadTrainingDataForm
+                },
+            ),
+            content_values=FORM_CONTENT_VALUES,
+        )
+        current_response = request.get_response(self.client)
+        self.assertTrueResponse(current_response, true_response)
+
+    def test_post(self):
+        data = {
+
+        }
+        request = Request(
+            url=self.url,
+            method=POST,
+            data=data,
+        )
