@@ -9,8 +9,9 @@ server:
 
 coverage:
 	coverage run --source='.' manage.py test
-	coverage report --omit=laboratory/asgi.py,laboratory/wsgi.py,manage.py,analysis/management/* --fail-under=100
 	coverage html --omit=laboratory/asgi.py,laboratory/wsgi.py,manage.py,analysis/management/*
+	coverage report --omit=laboratory/asgi.py,laboratory/wsgi.py,manage.py,analysis/management/* --fail-under=100
+
 
 migrate:
 	python manage.py migrate
@@ -20,3 +21,6 @@ compare_two:
 
 example_frequency_analysis:
 	python manage.py example_frequency_analysis "$(example)"
+
+load_training_data:
+	python manage.py load_training_data $(name) $(filepath) $(sheet_name)

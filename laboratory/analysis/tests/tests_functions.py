@@ -1,7 +1,7 @@
 """
 Tests for Analysis functions
 """
-from django.test import SimpleTestCase
+from django.test import SimpleTestCase, TestCase
 
 from analysis.functions import (
     Printer,
@@ -9,10 +9,27 @@ from analysis.functions import (
     analyze_two_items,
     example_frequency_analysis,
     total_rating,
+    load_training_data,
 )
+from analysis.tests.data import get_2x2_filepath, get_2x2_expected_data
+from analysis.models import TrainingData
 
 
-class TestFunctions(SimpleTestCase):
+class TestingPrinter:
+    """
+    Save prints to variable. To check the results
+    """
+
+    def __init__(self):
+        """
+        Init printer
+        """
+        self.results = []
+
+    def __call__(self, text, *args, **kwargs):
+        self.results.append(str(text))
+
+class FunctionsSimpleTestCase(SimpleTestCase):
     """
     Class for test all functions
     """
@@ -28,20 +45,6 @@ class TestFunctions(SimpleTestCase):
             """
 
         self.mock_printer = mock_printer
-
-        class TestingPrinter:
-            """
-            Save prints to variable. To check the results
-            """
-
-            def __init__(self):
-                """
-                Init printer
-                """
-                self.results = []
-
-            def __call__(self, text, *args, **kwargs):
-                self.results.append(str(text))
 
         self.testing_printer = TestingPrinter()
 
@@ -136,6 +139,7 @@ class TestFunctions(SimpleTestCase):
         )
         expected_tokens = {self.one, self.two}
         self.assertEqual(tokens, expected_tokens)
+
 
     def test_analyze_two_items(self):
         """
@@ -234,3 +238,26 @@ class TestFunctions(SimpleTestCase):
             'two': '1/3',
         }
         self.assertEqual(results, excepted_results)
+
+
+class FunctionsTestCase(TestCase):
+
+    def setUp(self):
+        self.testing_printer = TestingPrinter()
+
+    def test_load_testing_data(self):
+        filepath = get_2x2_filepath()
+        expected = get_2x2_expected_data()
+        result = load_training_data('first', filepath, sheet_name=0, printer=self.testing_printer)
+        self.assertTrue(isinstance(result, TrainingData))
+        self.assertTrue(expected.equals(result.get_dataframe()))
+
+        # prints
+        expected_prints = [
+            'Start',
+            f'Loading data from "{filepath}"...',
+            'Done:',
+            str(result),
+            'End',
+        ]
+        self.assertEqual(self.testing_printer.results, expected_prints)

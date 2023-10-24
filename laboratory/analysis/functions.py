@@ -2,6 +2,8 @@
 Analysis functions
 """
 from django.conf import settings
+from .loaders import load_from_excel
+from .models import TrainingData
 
 
 class Printer:
@@ -81,6 +83,14 @@ def example_frequency_analysis(example):
     return result
 
 
+@Printer(title=lambda name, filepath, sheet_name, **kwargs: f'Loading data from "{filepath}"...')
+def load_training_data(name, filepath, sheet_name):
+    dataframe = load_from_excel(filepath, sheet_name)
+    # TrainingData
+    training_data = TrainingData(name=name, data=dataframe.to_json())
+    return training_data
+
+
 def total_rating(to_search, match_list, find_similar):
     results = {}
     all_list = []
@@ -108,3 +118,4 @@ def total_rating(to_search, match_list, find_similar):
                 results[search] = result
 
     return results
+
