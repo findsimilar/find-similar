@@ -43,7 +43,7 @@ We invite developers, data scientists, and enthusiasts from all backgrounds to j
 ### To Get Involved
 
 Get start with:
-* [Developer Guidelines](https://github.com/findsimilar/find-similar/blob/master/DEVELOPER_GUIDELINES.md)
+* [Developer Guidelines](https://github.com/findsimilar/find-similar/blob/master/CONTRIBUTING.md)
 * [Developer Documentation](https://github.com/findsimilar/find-similar/blob/master/DEVELOPER_DOCUMENTATION.md)
 
 ## Installation:
