@@ -22,6 +22,15 @@ def read(filename):
 PACKAGE_PYPI_NAME = 'find-similar'
 PACKAGE_NAME = "find_similar"
 
+PROJECT_URLS = {
+    'Documentation': 'https://docs.findsimilar.org',
+    'Source': 'https://github.com/findsimilar/find-similar',
+    'Tracker': 'https://github.com/findsimilar/find-similar/issues',
+    'Release notes': 'https://github.com/findsimilar/find-similar/releases',
+    'Changelog': 'https://github.com/findsimilar/find-similar/releases',
+    'Download': 'https://pypi.org/project/find-similar/',
+}
+
 setup(
     name=PACKAGE_PYPI_NAME,
     version="1.5.0",
@@ -42,6 +51,7 @@ setup(
         'pymorphy3==1.2.0',
         "nltk==3.8.1",
         "pydantic==1.10.7",
+        'PyYAML==6.0.1',
     ],
     python_requires=">=3",
     classifiers=[
@@ -55,4 +65,5 @@ setup(
         "Topic :: Text Processing",
         "Topic :: Text Processing :: Linguistic",
     ],
+    project_urls= PROJECT_URLS,
 )
