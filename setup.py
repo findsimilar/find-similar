@@ -33,7 +33,7 @@ PROJECT_URLS = {
 
 setup(
     name=PACKAGE_PYPI_NAME,
-    version="1.5.0",
+    version="1.5.1",
     packages=[PACKAGE_NAME],
     package_data={
         PACKAGE_NAME: ['*', '*/*', '*/*/*']
