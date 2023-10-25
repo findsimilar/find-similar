@@ -1,8 +1,8 @@
 test:
-	pytest --ignore laboratory
+	pytest
 
 coverage:
-	pytest -s --ignore laboratory --cov --cov-report html --cov-fail-under 95
+	pytest -s --cov --cov-report html --cov-fail-under 97
 
 docs:
 	pdoc ./find_similar/ -o ./.docs
