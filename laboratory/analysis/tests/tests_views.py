@@ -470,3 +470,27 @@ class TrainingDataDeleteView(TestCase):
 
         current_response = request.get_response(self.client)
         self.assertTrueResponse(current_response, true_response)
+
+
+class FindSimilarViewTestCase(TestCase):
+
+    def setUp(self):
+        self.training_data = get_2x2_training_data()
+        self.url = reverse('analysis:find_similar', kwargs={'pk': self.training_data.pk})
+
+    def test_get(self):
+        request = Request(
+            url=self.url,
+        )
+        true_response = TrueResponse(
+            status_code=200,
+            context=Context(
+                keys=['object'],
+                items={
+                    'object': self.training_data,
+                },
+            )
+        )
+        current_response = request.get_response(self.client)
+
+        self.assertTrueResponse(current_response, true_response)

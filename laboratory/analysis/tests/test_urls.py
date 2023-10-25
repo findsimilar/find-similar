@@ -75,6 +75,13 @@ class TestUrlsTestCase(TestCase):
                 },
                 'reverse': f'delete-training-data/{training_data.pk}/',
             },
+            {
+                'url': 'find_similar',
+                'kwargs': {
+                    'pk': training_data.pk
+                },
+                'reverse': f'find-similar/{training_data.pk}/',
+            },
         ]
         for url in urls:
             app_url = f'{app_name}:{url["url"]}'

@@ -10,8 +10,9 @@ from analysis.functions import (
     example_frequency_analysis,
     total_rating,
     load_training_data,
+    find_similar_dataframe,
 )
-from analysis.tests.data import get_2x2_filepath, get_2x2_expected_data
+from analysis.tests.data import get_2x2_filepath, get_2x2_expected_data, get_2x2_training_data, Token
 from analysis.models import TrainingData
 
 
@@ -258,6 +259,38 @@ class FunctionsTestCase(TestCase):
             f'Loading data from "{filepath}"...',
             'Done:',
             str(result),
+            'End',
+        ]
+        self.assertEqual(self.testing_printer.results, expected_prints)
+
+    def test_find_similar_dataframe(self):
+        sorted_result = [
+                Token(text='2', cos=1.0),
+                Token(text='1', cos=0.5),
+                Token(text='3', cos=0.5),
+                Token(text='4', cos=0.0),
+            ]
+
+        def find_similar_2x2(text, texts):
+            return sorted_result
+
+        training_data = get_2x2_training_data()
+        text = '2'
+        dataframe = training_data.get_dataframe()
+        similars = find_similar_dataframe(
+            text,
+            training_data.get_dataframe(),
+            find_similar_2x2,
+            printer=self.testing_printer
+        )
+        self.assertEqual(len(similars), 4)
+
+        # prints
+        expected_prints = [
+            'Start',
+            f'Find similar for "{text}" in "{dataframe}"...',
+            'Done:',
+            str(similars),
             'End',
         ]
         self.assertEqual(self.testing_printer.results, expected_prints)

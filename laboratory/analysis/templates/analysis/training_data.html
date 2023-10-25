@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% block main %}
     <h2>{{object.name}}</h2>
+<p></p>
+<a class="btn btn-primary" href="#">Total rating</a>
+<a class="btn btn-info" href="#">One column rating</a>
+<a class="btn btn-info" href="#">Find similar</a>
+<a class="btn btn-second" href="#">Tokenize</a>
+<a class="btn btn-danger" href="{% url 'analysis:delete_training_data' pk=object.pk %}">Delete</a>
 {% endblock %}
 {% block results %}
     {% with object.get_dataframe as data %}
@@ -23,6 +29,5 @@
         {% endfor %}
     </table>
     {% endwith %}
-<p></p>
-<a class="btn btn-danger" href="{% url 'analysis:delete_training_data' pk=object.pk %}">Delete</a>
+
 {% endblock %}

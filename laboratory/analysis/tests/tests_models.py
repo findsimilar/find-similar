@@ -1,6 +1,6 @@
 import pandas as pd
-from django.test import TestCase
-from analysis.models import TrainingData
+from django.test import TestCase, SimpleTestCase
+from analysis.models import TrainingData, to_list
 from analysis.tests.data import get_2x2_expected_data
 
 
@@ -28,3 +28,15 @@ class TrainingDataTestCase(TestCase):
         self.assertEqual(len(self.training_data.get_dataframe().index), 2)
         self.assertEqual(self.training_data.columns_count, 2)
         self.assertEqual(self.training_data.rows_count, 2)
+
+
+class FunctionsSimpleTestCase(SimpleTestCase):
+
+    def test_to_list(self):
+        dataframe = pd.DataFrame(
+            [
+                [1, 2],
+                [3, 4],
+            ]
+        )
+        self.assertEqual(to_list(dataframe), [1, 3, 2, 4])

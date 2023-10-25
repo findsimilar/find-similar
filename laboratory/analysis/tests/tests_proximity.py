@@ -12,6 +12,7 @@ from analysis.proximity import (
     # calc_positions_for_column,
     array_to_row_list,
 )
+from analysis.tests.data import Token
 
 
 class NumpyTestCase(SimpleTestCase):
@@ -45,10 +46,10 @@ class ProximitySimpleTestCase(SimpleTestCase):
         self.known_data_2x1 = np.matrix([self.a, self.b], dtype=str)
         self.known_data_1x2 = np.matrix([[self.a], [self.b]], dtype=str)
 
-        @dataclass
-        class Token:
-            text: str
-            cos: float
+        # @dataclass
+        # class Token:
+        #     text: str
+        #     cos: float
 
         def find_similar_1x1(text, texts):
             return [

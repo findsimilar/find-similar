@@ -21,3 +21,12 @@ class TrainingData(models.Model):
     @property
     def rows_count(self):
         return len(self.get_dataframe().index)
+
+
+def to_list(dataframe: pd.DataFrame) -> list:
+    result = []
+    columns = dataframe.columns
+    for column in columns:
+        data_list = dataframe[column].values.tolist()
+        result += data_list
+    return result

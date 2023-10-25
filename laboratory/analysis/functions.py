@@ -3,7 +3,7 @@ Analysis functions
 """
 from django.conf import settings
 from .loaders import load_from_excel
-from .models import TrainingData
+from .models import TrainingData, to_list
 
 
 class Printer:
@@ -89,6 +89,12 @@ def load_training_data(name, filepath, sheet_name=0):
     # TrainingData
     training_data = TrainingData.objects.create(name=name, data=dataframe.to_json())
     return training_data
+
+
+@Printer(title=lambda text, dataframe, find_similar, **kwargs: f'Find similar for "{text}" in "{dataframe}"...')
+def find_similar_dataframe(text, dataframe, find_similar, **kwargs):
+    texts = to_list(dataframe)
+    return find_similar(text, texts, **kwargs)
 
 
 def total_rating(to_search, match_list, find_similar):
