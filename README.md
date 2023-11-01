@@ -4,7 +4,7 @@
 
 # FindSimilar
 
-> User-friendly library to find similar objects
+User-friendly library to find similar objects
 
 * [To get acquainted][get_acquanted]
 * [Mission Statement][mission_statement]
