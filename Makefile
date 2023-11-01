@@ -4,9 +4,6 @@ test:
 coverage:
 	pytest -s --cov --cov-report html --cov-fail-under 97
 
-docs:
-	pdoc ./find_similar/ -o ./.docs
-
 yamllint:
 	yamllint -d relaxed .
 
@@ -31,3 +28,9 @@ pylint:
 lint:
 	make yamllint
 	make pylint
+
+sphinx-help:
+	make help -f Sphinxfile
+
+package_docs:
+	sphinx-apidoc -o docs/package find_similar/

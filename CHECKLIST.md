@@ -19,7 +19,7 @@
 - [x] [Documentation](https://github.com/quillcraftsman/open-source-checklist#documentation)
 - [x] [Developer Documentation](https://github.com/quillcraftsman/open-source-checklist#developer-documentation)
 - [x] [Availability of Documentation](https://github.com/quillcraftsman/open-source-checklist#availability-of-documentation)
-- [ ] [FAQ](https://github.com/quillcraftsman/open-source-checklist#faq)
+- [x] [FAQ](https://github.com/quillcraftsman/open-source-checklist#faq)
 - [x] [Examples Output and Screenshots](https://github.com/quillcraftsman/open-source-checklist#examples-output-and-screenshots)
 - [x] [License](https://github.com/quillcraftsman/open-source-checklist#license)
 - [x] [Code of Conduct](https://github.com/quillcraftsman/open-source-checklist#code-of-conduct)
