@@ -97,6 +97,7 @@ setup(
         'similar'
         ],
     install_requires=[
+        'setuptools',
         'nltk == 3.8.1',
         'pymorphy3 == 1.2.1',
         'pydantic == 2.4.2',
