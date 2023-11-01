@@ -1,35 +1,41 @@
-# Developer Guidelines
+# Guidance on how to contribute
 
-## How to report an issue
+There are many ways to help:
+- [Using GitHub stars and discussions](#using-github-start-and-discussions)
+- [Using the issue tracker](#using-the-issue-tracker)
+- [Changing the code-base](#changing-the-code-base)
 
-* You can find all the project issue on GitHub [here](https://github.com/findsimilar/find-similar/issues)
-* If you found a bug, you can [create new issue](https://github.com/findsimilar/find-similar/issues/new) with the bug label
+## Using GitHub stars and discussions
 
-## How to write a code
+The most simple way to help the project - Press the **Star** button if you like the project.
 
-First you can check [existing issues](https://github.com/findsimilar/find-similar/issues). Pick one or create your own.
+Your participation in [discussions][discussions-path] will also be useful.
 
-* Create "Fork" of the project
-* To run the project and tests see [Developer documentation](https://github.com/findsimilar/find-similar/blob/master/DEVELOPER_DOCUMENTATION.md)
-* Do some changes locally
-* Create pull request to this repository (you can use git or "Contribute" button at the top of your local repository)
+Press the **Eye** button to watch for changes.
 
-## How development is usually done
+## Using the issue tracker
 
-The most involved people are the [members of organization](https://github.com/orgs/findsimilar/people). 
-They can make code review and accept pull requests.
-But any person can be involved report a bug of release a patch.
-We are always open to new people.
-New most involved contributors can become members of the organization
+Use the [issue tracker][issues-path]
+to suggest feature requests, report bugs, and ask questions.
+This is also a great way to connect with the developers of the project as well
+as others who are interested in this solution.
 
-## Interaction with other developers
+Use the [issue tracker][issues-path]  to find ways to contribute. 
+Find a bug or a feature, mention in
+the issue that you will take on that effort, then follow the _Changing the code-base_
+guidance below.
 
-Now we use issues and comments in pull requests.
+## Changing the code-base
 
-If you need something else like:
-* forum 
-* or realtime chat 
-* mail list
-* of discussions on GitHub
+Generally speaking, you should **fork** this repository, make changes in your
+own fork, and then submit a **pull request**. All new code should have associated
+unit tests that validate implemented features and the presence or lack of defects.
+Additionally, the code should follow any stylistic and architectural guidelines
+prescribed by the project. In the absence of such guidelines, mimic the styles
+and patterns in the existing code-base.
 
-Mail to [quill@craftsman.lol](mailto:quill@craftsman.lol) and we will discuss this. 
+You can check [Developer Documentation][developer-documentation-path] to easy start with code
+
+[issues-path]: https://github.com/findsimilar/find-similar/issues
+[discussions-path]: https://github.com/findsimilar/find-similar/discussions
+[developer-documentation-path]: https://docs.findsimilar.org/dev_documentation.html

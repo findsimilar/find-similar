@@ -160,14 +160,14 @@ def remove_part_speech(part_parse, parts=None, dictionary=None):
     If you want to replace one words to others you can send the dictionary.
     :param part_parse: pymorph2 object
     :param parts: set of part of speach
-        NOUN	noun name
-        ADJF	adjective name (full)
-        VERB	verb (personal form)
-        INFN	verb (infinitive)
-        NUMR	numeral
-        PREP	preposition
-        CONJ	conjunction
-        PRCL	particle
+    NOUN	noun name
+    ADJF	adjective name (full)
+    VERB	verb (personal form)
+    INFN	verb (infinitive)
+    NUMR	numeral
+    PREP	preposition
+    CONJ	conjunction
+    PRCL	particle
     :return: text without variable part of speach or None
     """
     result = get_normal_form(part_parse)
