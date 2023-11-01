@@ -4,6 +4,8 @@ User-friendly library to find similar objects
 
 You can find **Full Project Documentation** [here][documentation_path]
 
+First you can try our [DEMO WEBAPP](http://demo.findsimilar.org/) for a quick introduction to the `find-similar` 
+
 <hr>
 
 #### Workflows
