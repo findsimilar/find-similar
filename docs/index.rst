@@ -6,13 +6,15 @@
 Welcome to find-similar's documentation!
 ===============================================
 
+.. include:: about.rst
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   about
    install
    quickstart
+   documentation
    dev_documentation
    faq
    package/modules

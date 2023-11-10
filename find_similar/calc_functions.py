@@ -59,13 +59,14 @@ class TokenText:
         :param other: second TokenText objects (self - is the first)
         :return: True or False, depends on object id
         """
-        return self.id == other.id_base_item
+        return self.text == other.text
 
     def __str__(self):
         return repr(self)
 
     def __repr__(self):
-        return f'TokenText(text="{self.text}", tokens={self.tokens})'
+        cos_str = f', cos={self.cos}' if hasattr(self, 'cos') else ''
+        return f'TokenText(text="{self.text}", len(tokens)={len(self.tokens)}{cos_str})'
 
 
 def get_tokens(text, dictionary=None, language="russian", remove_stopwords=True) -> set:

@@ -2,5 +2,5 @@
 Package info
 """
 name = 'find-similar'
-version = '1.6.1'
+version = '2.0.0'
 status = '4 - Beta'
