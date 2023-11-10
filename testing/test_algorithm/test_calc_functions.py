@@ -127,8 +127,10 @@ class TestTokenText:
         Test repr magic method
         """
         text = TokenText(text="one two")
-        print(repr(text))
-        assert repr(text) == f'TokenText(text="one two", tokens={str(text.tokens)})'
+        assert repr(text) == 'TokenText(text="one two", len(tokens)=2)'
+
+        text.cos = 0.9
+        assert repr(text) == 'TokenText(text="one two", len(tokens)=2, cos=0.9)'
 
     def test_str(self):
         """

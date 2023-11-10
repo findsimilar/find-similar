@@ -121,13 +121,18 @@ from find_similar import find_similar
 texts = ['one two', 'two three', 'three four']
 
 text_to_compare = 'one four'
-result = find_similar(text_to_compare, texts, count=10)
-for item in result:
-    print(item.text)
-    print(item.cos)
+find_similar(text_to_compare, texts, count=10)
 ```
 
-### More examples in [Full Documentation][documentation_path]
+```commandline
+[TokenText(text="one two", len(tokens)=2, cos=0.5), TokenText(text="three four", len(tokens)=2, cos=0.5), TokenText(text="two three", len(tokens)=2, cos=0)]
+```
+
+- The result is the list of `TokenText` instances ordering by `cos`
+- `cos` is the mark of texts similarity
+
+### See more examples in [Full Documentation][documentation_path]
+### See the demonstration and mini tutorial in the [Demo project](http://demo.findsimilar.org/)
 
 ## Contributing
 

@@ -23,15 +23,15 @@ def find_similar(  # pylint: disable=too-many-arguments
 ) -> list[TokenText]:
     """
     The main function to search similar texts.
+
     :param text_to_check: Text to find similars
     :param texts: List of str or TokenText. In these texts we will search similars
     :param language: Language, default='russian'
-    :param count: Count results
-    :param dictionary: default = None.
+    :param count: Results count
+    :param dictionary: default = None. If you want to replace one words to others
     :param keywords: default = None.
-    If you want to replace one words to others you can send the dictionary.
     :param remove_stopwords: default = True. Remove or not stopwords
-    :return: Result list sorted by similarity percent
+    :return: Result list sorted by similarity percent (cos)
     """
     if isinstance(text_to_check, TokenText):
         text_to_check_tokens = text_to_check.tokens
