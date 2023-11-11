@@ -22,8 +22,12 @@
 - [x] [FAQ](https://github.com/quillcraftsman/open-source-checklist#faq)
 - [x] [Examples Output and Screenshots](https://github.com/quillcraftsman/open-source-checklist#examples-output-and-screenshots)
 - [x] [License](https://github.com/quillcraftsman/open-source-checklist#license)
-- [x] [Code of Conduct](https://github.com/quillcraftsman/open-source-checklist#code-of-conduct)
-- [x] [Security Policy](https://github.com/quillcraftsman/open-source-checklist#security-policy)
+- [x] [Code of Conduct](https://github.com/libresource/open-source-checklist#code-of-conduct)
+- [x] [Security Policy](https://github.com/libresource/open-source-checklist#security-policy)
+- [x] [Governance](https://github.com/libresource/open-source-checklist#governance)
+- [x] [Issue templates](https://github.com/libresource/open-source-checklist#issue-templates)
+- [x] [Pull Request Template](https://github.com/libresource/open-source-checklist#pull-request-template)
+- [x] [Support](https://github.com/libresource/open-source-checklist#support)
 
 [CI and CD](https://github.com/quillcraftsman/open-source-checklist#ci-and-cd)
 - [X] Tests
@@ -32,3 +36,4 @@
 - [X] Linters
 - [X] Build
 - [X] Deploy
+- [ ] [New User Greetings](https://github.com/libresource/open-source-checklist#new-user-greetings)
