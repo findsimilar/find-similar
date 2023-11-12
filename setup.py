@@ -100,7 +100,6 @@ setup(
         'setuptools',
         'nltk == 3.8.1',
         'pymorphy3 == 1.2.1',
-        'pydantic == 2.4.2',
         'PyYAML == 6.0.1',
     ],
     python_requires=">=3",

@@ -1,4 +1,4 @@
-name: Publish Conde
+name: Publish Conda
 
 on:
   release:

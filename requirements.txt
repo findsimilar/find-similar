@@ -1,7 +1,5 @@
 setuptools==68.2.2
 nltk==3.8.1
 pymorphy3==1.2.1
-pydantic==2.4.2
 PyYAML==6.0.1
 pandas==2.1.2
-SQLAlchemy==2.0.22
