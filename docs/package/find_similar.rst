@@ -36,6 +36,14 @@ find\_similar.core module
    :undoc-members:
    :show-inheritance:
 
+find\_similar.package module
+----------------------------
+
+.. automodule:: find_similar.package
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 find\_similar.tokenize module
 -----------------------------
 

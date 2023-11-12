@@ -19,12 +19,12 @@ requirements:
     - pip
     - python >=3.10
   run:
+    - python >=3.10
     - nltk ==3.8.1
     - pydantic ==2.4.2
-    - pymorphy3 ==1.2.1
-    - python >=3.10
     - pyyaml ==6.0.1
-    - setuptools
+    - pymorphy3
+
 
 test:
   imports:
