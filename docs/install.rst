@@ -20,3 +20,10 @@ Clone from GitHub
 
    git clone https://github.com/findsimilar/find-similar.git
    make install
+
+Using Anaconda
+^^^^^^^^^^^^^^
+
+.. code-block:: bash
+
+   pip install -i https://pypi.anaconda.org/quillcraftsman/simple find-similar

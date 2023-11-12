@@ -12,24 +12,31 @@ First you can try our [DEMO WEBAPP](http://demo.findsimilar.org/) for a quick in
 [![Tests](https://github.com/findsimilar/find-similar/actions/workflows/run-tests.yml/badge.svg?branch=main)](https://github.com/findsimilar/find-similar/actions/workflows/run-tests.yml)
 [![Pylint](https://github.com/findsimilar/find-similar/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/findsimilar/find-similar/actions/workflows/lint.yml)
 
-#### Package
+#### PyPi
 [![Version](https://img.shields.io/pypi/v/find-similar.svg)](https://pypi.python.org/pypi/find-similar/)
 [![Development Status](https://img.shields.io/pypi/status/find-similar.svg)](https://pypi.python.org/pypi/find-similar)
 [![Python version](https://img.shields.io/pypi/pyversions/find-similar.svg)](https://pypi.python.org/pypi/find-similar/)
-[![License](https://img.shields.io/pypi/l/find-similar)](https://github.com/findsimilar/find-similar/blob/main/LICENSE)
 [![Wheel](https://img.shields.io/pypi/wheel/find-similar.svg)](https://pypi.python.org/pypi/find-similar/)
+
+### Anaconda
+[![Version](https://anaconda.org/quillcraftsman/find-similar/badges/version.svg)](https://anaconda.org/quillcraftsman/find-similar/)
+[![Last Updated](https://anaconda.org/quillcraftsman/find-similar/badges/latest_release_date.svg)](https://anaconda.org/quillcraftsman/find-similar/)
+[![Platforms](https://anaconda.org/quillcraftsman/find-similar/badges/platforms.svg)](https://anaconda.org/quillcraftsman/find-similar/)
+
+### License
+[![License](https://img.shields.io/pypi/l/find-similar)](https://github.com/findsimilar/find-similar/blob/main/LICENSE)
 
 #### Support
 [![Documentation](https://img.shields.io/badge/docs-0094FF.svg)][documentation_path]
 [![Discussions](https://img.shields.io/badge/discussions-ff0068.svg)](https://github.com/findsimilar/find-similar/discussions/)
 [![Issues](https://img.shields.io/badge/issues-11AE13.svg)](https://github.com/findsimilar/find-similar/issues/)
 
-#### Downloads
+#### PyPi Downloads
 [![Day Downloads](https://img.shields.io/pypi/dd/find-similar)](https://pepy.tech/project/find-similar)
 [![Week Downloads](https://img.shields.io/pypi/dw/find-similar)](https://pepy.tech/project/find-similar)
 [![Month Downloads](https://img.shields.io/pypi/dm/find-similar)](https://pepy.tech/project/find-similar)
-
-[//]: # ([![All Downloads]&#40;https://img.shields.io/pypi/dt/find-similar&#41;]&#40;https://pepy.tech/project/find-similar&#41;)
+#### Anaconda Downloads
+[![Anaconda](https://anaconda.org/quillcraftsman/find-similar/badges/downloads.svg)](https://anaconda.org/quillcraftsman/find-similar/)
 
 #### Languages
 [![Languages](https://img.shields.io/github/languages/count/findsimilar/find-similar)](https://github.com/findsimilar/find-similar)
