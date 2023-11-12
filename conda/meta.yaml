@@ -1,0 +1,44 @@
+{% set name = "find-similar" %}
+{% set version = "2.0.0" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: 4e0996e530ad0f6156d5d731d278e286710edefb2c059daec9be87c48e15462d
+
+build:
+  number: 0
+  noarch: python
+  script: "{{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation"
+
+requirements:
+  host:
+    - pip
+    - python >=3.10
+  run:
+    - nltk ==3.8.1
+    - pydantic ==2.4.2
+    - pymorphy3 ==1.2.1
+    - python >=3.10
+    - pyyaml ==6.0.1
+    - setuptools
+
+test:
+  imports:
+    - find_similar
+
+about:
+  home: "https://github.com/findsimilar/find-similar"
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: "User-friendly library to find similar objects"
+  doc_url: "https://docs.findsimilar.org"
+  dev_url: "https://github.com/findsimilar/find-similar"
+
+extra:
+  recipe-maintainers:
+    - findsimilar

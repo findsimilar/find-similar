@@ -26,7 +26,6 @@ pylint:
 	pylint $(shell git ls-files '*.py')
 
 lint:
-	make yamllint
 	make pylint
 
 sphinx-help:
