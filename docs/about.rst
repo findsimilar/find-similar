@@ -5,8 +5,6 @@ User-friendly library to find similar objects
 
 Project on `GitHub <https://github.com/findsimilar/find-similar>`_
 
-First you can try our `DEMO WEBAPP <http://demo.findsimilar.org/>`_ for a quick introduction to the **find-similar**
-
 - :ref:`Mission`
 - :ref:`Open Source Project`
 - :ref:`Features`
