@@ -137,7 +137,6 @@ find_similar(text_to_compare, texts, count=10)
 - `cos` is the mark of texts similarity
 
 ### See more examples in [Full Documentation][documentation_path]
-### See the demonstration and mini tutorial in the [Demo project](http://demo.findsimilar.org/)
 
 ## Contributing
 
