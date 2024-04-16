@@ -4,8 +4,6 @@ User-friendly library to find similar objects
 
 You can find **Full Project Documentation** [here][documentation_path]
 
-First you can try our [DEMO WEBAPP](http://demo.findsimilar.org/) for a quick introduction to the `find-similar` 
-
 <hr>
 
 #### Workflows
@@ -103,12 +101,12 @@ Find similar texts
 ## Requirements
 
 - nltk, pymorphy3
-- See more in [Full Documentation](https://docs.findsimilar.org/about.html#requirements)
+- See more in [Full Documentation](https://findsimilar.craftsman.lol/about.html#requirements)
 
 ## Development Status
 
 - Package already available on [PyPi](https://pypi.org/project/find-similar/)
-- See more in [Full Documentation](https://docs.findsimilar.org/about.html#development-status)
+- See more in [Full Documentation](https://findsimilar.craftsman.lol/about.html#development-status)
 
 ## Install
 
@@ -118,7 +116,7 @@ Find similar texts
 pip install find-similar
 ```
 
-See more in [Full Documentation](https://docs.findsimilar.org/install.html)
+See more in [Full Documentation](https://findsimilar.craftsman.lol/install.html)
 
 ## Quickstart
 
@@ -146,10 +144,10 @@ find_similar(text_to_compare, texts, count=10)
 You are welcome! To easy start please check:
 - [Full Documentation][documentation_path]
 - [Contributing](CONTRIBUTING.md)
-- [Developer Documentation](https://docs.findsimilar.org/dev_documentation.html)
+- [Developer Documentation](https://findsimilar.craftsman.lol/dev_documentation.html)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Security Policy](SECURITY.md)
 - [Governance](GOVERNANCE.md)
 - [Support](SUPPORT.md)
 
-[documentation_path]: https://docs.findsimilar.org
+[documentation_path]: https://findsimilar.craftsman.lol

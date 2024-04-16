@@ -63,7 +63,7 @@ with open_local([PACKAGE_NAME, "package.py"]) as fp:
         raise RuntimeError("Unable to determine Package Info.")
 
 PROJECT_URLS = {
-    'Documentation': 'https://docs.findsimilar.org',
+    'Documentation': 'https://findsimilar.craftsman.lol',
     'Source': 'https://github.com/findsimilar/find-similar',
     'Tracker': 'https://github.com/findsimilar/find-similar/issues',
     'Release notes': 'https://github.com/findsimilar/find-similar/releases',
