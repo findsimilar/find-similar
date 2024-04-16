@@ -38,4 +38,4 @@ You can check [Developer Documentation][developer-documentation-path] to easy st
 
 [issues-path]: https://github.com/findsimilar/find-similar/issues
 [discussions-path]: https://github.com/findsimilar/find-similar/discussions
-[developer-documentation-path]: https://docs.findsimilar.org/dev_documentation.html
+[developer-documentation-path]: https://findsimilar.craftsman.lol/dev_documentation.html
