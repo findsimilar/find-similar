@@ -2,7 +2,7 @@ test:
 	pytest
 
 coverage:
-	pytest -s --cov --cov-report html --cov-fail-under 97
+	pytest -s --cov --cov-report html --cov-fail-under 100
 
 yamllint:
 	yamllint -d relaxed .

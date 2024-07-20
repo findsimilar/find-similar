@@ -101,11 +101,11 @@ def split_text_and_digits(text):
     :param text: enter text
     :return: list of separated texts
     """
-    regex = r"^\D+[0]\D+$"
+    regex = r"^\D+[0]\D+$"  # so0os
     match = re.search(regex, text, re.MULTILINE)
     if match:
         return [text]
-    # Проверяем на вольты и амперы
+    # Проверяем на вольты и амперы 55В -> 55 v
     regex = r"\d+[.]?\d?[в|а|В|А|B|A|a]{1}$"
     match = re.search(regex, text, re.MULTILINE)
     if match:
