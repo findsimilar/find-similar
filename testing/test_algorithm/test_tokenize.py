@@ -1,6 +1,7 @@
 """
 Tests for tokenize
 """
+from unittest import mock
 import pytest
 from find_similar.calc_models import LanguageNotFoundException
 from find_similar.tokenize import (
@@ -15,6 +16,7 @@ from find_similar.tokenize import (
     HashebleSet,
     replace_yio,
     add_nltk_stopwords,
+    get_stopwords_from_nltk,
 )
 
 
@@ -45,6 +47,23 @@ def test_split_text_and_digits():
     input_str = "1some2string5with9"
     result = split_text_and_digits(input_str)
     assert result == ["1", "some", "2", "string", "5", "with", "9"]
+
+
+def test_split_text_and_digits_match():
+    """
+    Test split_text_and_digits when we use regex
+    """
+    input_str = "Voltage 55В"
+    result = split_text_and_digits(input_str)
+    assert result == ["55", "v"]
+
+
+def test_split_text_and_digits_other_match():
+    """
+    Test split_text_and_digits with first regex match ^\\D+[0]\\D+$
+    """
+    input_str = "so0os"
+    assert split_text_and_digits(input_str) == [input_str]
 
 
 def test_get_normal_form():
@@ -161,3 +180,29 @@ def test_remove_or_not_stopwords():
     assert tokenize(text, "russian", remove_stopwords=True) == result
     result = {"что", "я", "о", "круг"}
     assert tokenize(text, "russian", remove_stopwords=False) == result
+
+
+def test_get_stopwords_from_nltk_lookup_error():
+    """
+    Test get_stopwords_from_nltk when LookupError raised
+    """
+
+    class MockStopwords:
+        """
+        Mock class for nltk.corpus.stopwords
+        """
+        def words(self, *args, **kwargs):
+            """
+            mock function to words
+            """
+            raise LookupError
+
+    def mock_download(*args, **kwargs):  # pylint:disable=unused-argument
+        """
+        Mock function for nltk.download
+        """
+
+    with mock.patch('find_similar.tokenize.stopwords', MockStopwords()):
+        with mock.patch('nltk.download', mock_download):
+            with pytest.raises(LookupError):
+                get_stopwords_from_nltk('english')
